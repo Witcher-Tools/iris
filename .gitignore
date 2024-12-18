@@ -1,0 +1,11 @@
+/.idea
+/.task
+
+/bin
+/build
+
+/frontend/public/images
+/frontend/node_modules
+/frontend/dist
+/frontend/.idea
+/frontend/bindings

@@ -1,0 +1,74 @@
+@property --gwentButtonInitBackground {
+    syntax: '<color>';
+    initial-value: rgb(44, 36, 30);
+    inherits: false;
+}
+
+@property --gwentButtonInitBackgroundEnd {
+    syntax: '<color>';
+    initial-value: rgb(44, 36, 30);
+    inherits: false;
+}
+
+@property --gwentButtonTextInitBackground {
+    syntax: '<color>';
+    initial-value: rgb(197, 182, 119);
+    inherits: false;
+}
+
+@property --gwentButtonTextInitBackgroundEnd {
+    syntax: '<color>';
+    initial-value: rgb(159, 144, 92);
+    inherits: false;
+}
+
+.gwent-button {
+    background: linear-gradient(180deg, var(--gwentButtonInitBackground), var(--gwentButtonInitBackgroundEnd));
+    transition: --gwentButtonInitBackground .15s ease-in-out, --gwentButtonInitBackgroundEnd .15s ease-in-out;
+
+    &:active {
+        --gwentButtonInitBackground: rgb(253, 227, 116);
+        --gwentButtonInitBackgroundEnd: rgb(255, 175, 74);
+    }
+
+    ::before, ::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        height: 3rem;
+        left: 0;
+        width: 100%;
+        background-image: url('images/tab-border-93186012.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        transition: .15s ease-in-out;
+    }
+
+    ::after {
+        content: "";
+        bottom: 0;
+        left: 0;
+        top: auto;
+        transform: scale(-1);
+    }
+
+    &:hover {
+        ::after, ::before {
+            filter: grayscale(0) brightness(1.1) sepia(1) hue-rotate(80deg) saturate(6) brightness(1.4);
+        }
+    }
+
+    &:active {
+        span {
+            --gwentButtonTextInitBackground: rgb(35 34 32);
+            --gwentButtonTextInitBackgroundEnd: rgb(35 34 32);
+        }
+    }
+
+    span {
+        background: linear-gradient(to right, var(--gwentButtonTextInitBackground) 0%, var(--gwentButtonTextInitBackgroundEnd) 100%) text;
+        -webkit-text-fill-color: transparent;
+
+        transition: --gwentButtonTextInitBackground .15s ease-in-out, --gwentButtonTextInitBackgroundEnd .15s ease-in-out;
+    }
+}

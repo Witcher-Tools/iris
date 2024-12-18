@@ -1,0 +1,8 @@
+{
+    "main": {
+        "verticalTexture": "Вертикальна текстура",
+        "horizontalTexture": "Горизонтальна текстура",
+        "slope": "Нахил",
+        "scale": "Масштаб"
+    }
+}

@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Gwent';
+    src: local('Gwent'), url(fonts/Gwent/gwent_extrabold.ttf) format('woff');
+}
+
+* {
+    font-family: Gwent, serif;
+}
+
+body {
+    background: #000000;
+
+    /*border-image-source: url("images/frame-fa00d6ac.png");*/
+    /*border-width: 24px;*/
+    border-style: solid;
+    border-radius: 0;
+    border-image-slice: 22;
+    border-image-outset: 0;
+    border-image-repeat: round;
+
+    background-repeat: repeat;
+    background-position: center center;
+    background-size: cover;
+
+    background-image: url("images/bg-seamless-short-netdecking-c7f954c0.jpg");
+    height: 100vh;
+}

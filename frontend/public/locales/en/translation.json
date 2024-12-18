@@ -1,0 +1,8 @@
+{
+    "main": {
+        "verticalTexture": "Vertical texture",
+        "horizontalTexture": "Horizontal texture",
+        "slope": "Slope",
+        "scale": "Scale"
+    }
+}
