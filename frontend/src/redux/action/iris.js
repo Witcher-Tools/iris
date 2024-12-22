@@ -1,4 +1,4 @@
-import {UPDATE_TEXTURES} from "../types/iris.js";
+import { UPDATE_TEXTURES } from "../types/iris.js";
 
 export const setIrisState = (payload) => {
     return {
@@ -14,6 +14,10 @@ export const addTexture = (texture) => (dispatch, getState) => {
 
     const currentTextures = getState().mainState.textures || [];
 
+    if (currentTextures.length === 32) {
+        return;
+    }
+
     const allTextures = [...currentTextures, texture];
 
     const totalTextures = allTextures.length;
@@ -24,13 +28,25 @@ export const addTexture = (texture) => (dispatch, getState) => {
         end: Math.floor(((index + 1) / totalTextures) * (TOTAL_RANGE + 1)) - 1,
     }));
 
-    dispatch(setIrisState({
-        textures: recalculatedTextures
-    }));
+    dispatch(
+        setIrisState({
+            textures: recalculatedTextures,
+        })
+    );
+};
+
+export const selectTexture = (textureIndex) => (dispatch, getState) => {
+    dispatch(
+        setIrisState({
+            selectedTexture: textureIndex,
+        })
+    );
 };
 
 export const setTextures = (textures) => (dispatch, getState) => {
-    dispatch(setIrisState({
-        textures: textures,
-    }));
+    dispatch(
+        setIrisState({
+            textures: textures,
+        })
+    );
 };

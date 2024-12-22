@@ -1,18 +1,23 @@
 @property --gwentButtonInitBackground {
-    syntax: '<color>';
+    syntax: "<color>";
     initial-value: rgb(44, 36, 30);
     inherits: false;
 }
 
 @property --gwentButtonInitBackgroundEnd {
-    syntax: '<color>';
+    syntax: "<color>";
     initial-value: rgb(44, 36, 30);
     inherits: false;
 }
 
 .gwent-input-container {
     label {
-        background: linear-gradient(to right, var(--gwentButtonTextInitBackground) 0%, var(--gwentButtonTextInitBackgroundEnd) 100%) text;
+        background: linear-gradient(
+                to right,
+                var(--gwentButtonTextInitBackground) 0%,
+                var(--gwentButtonTextInitBackgroundEnd) 100%
+            )
+            text;
         -webkit-text-fill-color: transparent;
     }
 }
@@ -21,9 +26,9 @@
     position: relative;
     height: fit-content;
     background: linear-gradient(
-            180deg,
-            var(--gwentButtonInitBackground),
-            var(--gwentButtonInitBackgroundEnd)
+        180deg,
+        var(--gwentButtonInitBackground),
+        var(--gwentButtonInitBackgroundEnd)
     );
 
     input {
@@ -43,7 +48,8 @@
         }
     }
 
-    &::before, &::after {
+    &::before,
+    &::after {
         content: "";
         pointer-events: none;
         position: absolute;
@@ -51,7 +57,7 @@
         height: 3rem;
         left: 0;
         width: 100%;
-        background-image: url('images/tab-border-93186012.png');
+        background-image: url("images/tab-border-93186012.png");
         background-size: contain;
         background-repeat: no-repeat;
         transition: filter 0.2s ease-in-out;
@@ -63,7 +69,9 @@
         transform: scaleY(-1);
     }
 
-    &.focused::before, &.focused::after {
-        filter: grayscale(0) brightness(1.1) sepia(1) hue-rotate(80deg) saturate(6) brightness(1.4);
+    &.focused::before,
+    &.focused::after {
+        filter: grayscale(0) brightness(1.1) sepia(1) hue-rotate(105deg)
+            saturate(6) brightness(1.4);
     }
 }

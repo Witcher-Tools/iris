@@ -1,15 +1,14 @@
-import React, {forwardRef, useState} from "react";
-import "./Input.css";
 import PropTypes from "prop-types";
+import React, { forwardRef, useState } from "react";
+
+import "./Input.css";
 
 const Input = forwardRef(({ label, ...props }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
 
     return (
         <div className={"gwent-input-container"}>
-            {label &&
-                <label>{label}</label>
-            }
+            {label && <label>{label}</label>}
             <div className={`gwent-input ${isFocused ? "focused" : ""}`}>
                 <input
                     ref={ref}
@@ -25,6 +24,5 @@ const Input = forwardRef(({ label, ...props }, ref) => {
 Input.propTypes = {
     label: PropTypes.string,
 };
-
 
 export default Input;

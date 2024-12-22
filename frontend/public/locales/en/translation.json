@@ -3,6 +3,11 @@
         "verticalTexture": "Vertical texture",
         "horizontalTexture": "Horizontal texture",
         "slope": "Slope",
-        "scale": "Scale"
+        "scale": "Scale",
+        "addTexture": "Add texture",
+        "selectTextureMap": "Select texture map",
+        "selectTilesFolder": "Select tiles folder",
+        "textureMap": "Texture map: ",
+        "tilesFolder": "Tiles folder: "
     }
 }

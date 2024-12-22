@@ -3,8 +3,10 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'Gwent';
-    src: local('Gwent'), url(fonts/Gwent/gwent_extrabold.ttf) format('woff');
+    font-family: "Gwent";
+    src:
+        local("Gwent"),
+        url(fonts/Gwent/gwent_extrabold.ttf) format("woff");
 }
 
 * {

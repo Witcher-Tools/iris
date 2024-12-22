@@ -1,0 +1,40 @@
+.tab-links-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    top: 80px;
+    right: 65%;
+    position: absolute;
+    transform: rotate(90deg);
+    z-index: -3;
+}
+
+.tab-link {
+    position: relative;
+
+    filter: brightness(0.8) grayscale(1);
+    width: 4rem;
+    height: 10rem;
+    cursor: pointer;
+    clip-path: polygon(0 0%, 100% 0%, 100% 100%, 50% 87%, 0% 100%, 0% 0%);
+    /*box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.5), 0 4px 6px rgba(0, 0, 0, 0.3);*/
+    background-size: cover;
+    transition: 0.3s ease-in-out;
+    top: 0;
+
+    &.tab-link-selected {
+        transition: 0.3s ease-in-out;
+        filter: brightness(1.2);
+        top: 25px;
+
+        &:hover {
+            top: 25px;
+        }
+    }
+
+    &:hover {
+        top: 10px;
+    }
+}

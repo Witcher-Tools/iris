@@ -1,8 +1,13 @@
-import {UPDATE_TEXTURES} from "../types/iris.js";
+import { UPDATE_TEXTURES } from "../types/iris.js";
 
 const initialState = {
-    textures: []
-}
+    textures: [],
+    selectedTexture: null,
+
+    importFolder: null,
+    importTextureMap: null,
+    importDisabled: true,
+};
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {

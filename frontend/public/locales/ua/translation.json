@@ -3,6 +3,11 @@
         "verticalTexture": "Вертикальна текстура",
         "horizontalTexture": "Горизонтальна текстура",
         "slope": "Нахил",
-        "scale": "Масштаб"
+        "scale": "Масштаб",
+        "addTexture": "Додати текстуру",
+        "selectTextureMap": "Вибрати текстурну карту",
+        "selectTilesFolder": "Вибрати папку тайлів",
+        "textureMap": "Карта текстур: ",
+        "tilesFolder": "Папка тайлів: "
     }
 }

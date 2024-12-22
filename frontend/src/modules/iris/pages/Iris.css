@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.map-container {
+    position: relative;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    width: fit-content;
+    background-color: transparent;
+
+    border-image-source: url("images/frame-fa00d6ac.png");
+    border-width: 24px;
+    border-style: solid;
+    border-radius: 0;
+    border-image-slice: 22;
+    border-image-outset: 0;
+    border-image-repeat: round;
+}
+
+.map-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+/*.text-sm {*/
+/*    background: linear-gradient(to right, var(--gwentButtonTextInitBackground) 0%, var(--gwentButtonTextInitBackgroundEnd) 100%) text;*/
+/*    -webkit-text-fill-color: transparent;*/
+/*}*/
+
+.gwent-map {
+    background-image: url("images/faction-select-bg-init-8e4cc485 (8).jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+
+    aspect-ratio: 1863/1708;
+    padding: 4rem 3rem;
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    position: relative;
+}
