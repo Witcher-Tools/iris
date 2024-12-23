@@ -9,6 +9,8 @@
         "selectTilesFolder": "Select tiles folder",
         "textureMap": "Texture map: ",
         "tilesFolder": "Tiles folder: ",
-        "import": "Import"
+        "import": "Import",
+        "error": "Error",
+        "success": "Success"
     }
 }

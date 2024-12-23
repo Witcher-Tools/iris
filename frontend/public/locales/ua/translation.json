@@ -9,6 +9,8 @@
         "selectTilesFolder": "Вибрати папку тайлів",
         "textureMap": "Карта текстур: ",
         "tilesFolder": "Папка тайлів: ",
-        "import": "Імпортувати"
+        "import": "Імпортувати",
+        "error": "Помилка",
+        "success": "Успіх"
     }
 }

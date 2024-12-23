@@ -29,15 +29,23 @@ func main() {
 		},
 	})
 
-	app.NewWebviewWindowWithOptions(application.WebviewWindowOptions{
-		Title: "Window 1",
+	_ = app.NewWebviewWindowWithOptions(application.WebviewWindowOptions{
+		Title: "Іріс",
+
 		Mac: application.MacWindow{
 			InvisibleTitleBarHeight: 50,
 			Backdrop:                application.MacBackdropTranslucent,
 			TitleBar:                application.MacTitleBarHiddenInset,
 		},
+		Windows: application.WindowsWindow{},
+
+		MinWidth:      1430,
+		MinHeight:     890,
+		DisableResize: true,
+
 		BackgroundColour: application.NewRGB(27, 38, 54),
-		URL:              "/",
+
+		URL: "/",
 	})
 
 	err := app.Run()

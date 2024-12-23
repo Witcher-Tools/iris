@@ -1,0 +1,6 @@
+.gwent-paragraph {
+    font-family: Gwent, serif;
+    line-height: 1.5;
+    color: #c5b47f;
+    transition: 0.3s ease-in-out;
+}

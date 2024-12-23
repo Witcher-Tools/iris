@@ -1,12 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 
-import { addTexture } from "@/redux/action/iris.js";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import {addTexture} from "@/redux/action/iris.js";
+import {useTranslation} from "react-i18next";
+import {useDispatch, useSelector} from "react-redux";
 
-import { SelectTextureMap } from "@bindings/changeme/greetservice.js";
-
-import TabLink from "@shared/components/TabLink/TabLink.jsx";
+import {SelectTextureMap} from "@bindings/changeme/greetservice.js";
 import Button from "@shared/components/ui/Button/Button.jsx";
 import Card from "@shared/components/ui/Card/Card.jsx";
 import Input from "@shared/components/ui/Input/Input.jsx";
@@ -14,9 +12,13 @@ import Separator from "@shared/components/ui/Separator/Separator.jsx";
 
 import TextureRangeSelector from "../components/Range/Range.jsx";
 import "./Iris.css";
+import {useModal} from "@shared/hooks/useModal.js";
+import Modal from "@shared/components/ui/Modal/Modal.jsx";
 
 function Iris() {
     const { t } = useTranslation();
+
+    const { isVisible, openModal, closeModal } = useModal();
 
     const dispatch = useDispatch();
 
@@ -111,90 +113,89 @@ function Iris() {
 
     return (
         <>
-            <div className={"h-full"}>
-                <div className="flex flex-row h-full justify-center">
-                    <div className="basis-2/12 h-full relative z-10 ml-24">
-                        <TabLink />
-                        <Card>
-                            <div className="flex flex-col content-between h-full justify-between">
-                                <div className="flex flex-col gap-4">
-                                    <Input
-                                        label={t("main.verticalTexture")}
-                                        type="number"
-                                        min="1"
-                                        max="32"
-                                        className={"px-4 py-3"}
-                                        ref={verticalTexture}
-                                    />
-                                    <Input
-                                        label={t("main.horizontalTexture")}
-                                        type="number"
-                                        min="1"
-                                        max="32"
-                                        className={"px-4 py-3"}
-                                        ref={horizontalTexture}
-                                    />
-                                    <Input
-                                        label={t("main.slope")}
-                                        type="number"
-                                        min="1"
-                                        max="8"
-                                        className={"px-4 py-3"}
-                                        ref={slope}
-                                    />
-                                    <Input
-                                        label={t("main.scale")}
-                                        type="number"
-                                        min="1"
-                                        max="8"
-                                        className={"px-4 py-3"}
-                                        ref={scale}
-                                    />
+            <div className="basis-4/12 h-full relative z-2 ml-24">
+                <Card>
+                    <div className="flex flex-col content-between h-full justify-between">
+                        <div className="flex flex-col gap-4">
+                            <Input
+                                label={t("main.verticalTexture")}
+                                type="number"
+                                min="1"
+                                max="32"
+                                className={"px-4 py-3"}
+                                ref={verticalTexture}
+                            />
+                            <Input
+                                label={t("main.horizontalTexture")}
+                                type="number"
+                                min="1"
+                                max="32"
+                                className={"px-4 py-3"}
+                                ref={horizontalTexture}
+                            />
+                            <Input
+                                label={t("main.slope")}
+                                type="number"
+                                min="1"
+                                max="8"
+                                className={"px-4 py-3"}
+                                ref={slope}
+                            />
+                            <Input
+                                label={t("main.scale")}
+                                type="number"
+                                min="1"
+                                max="8"
+                                className={"px-4 py-3"}
+                                ref={scale}
+                            />
+                            <Button
+                                className={"py-2 text-sm"}
+                                disabled={false}
+                                text={t("main.addTexture")}
+                                onClick={addTextureA}
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <div className="flex flex-col gap-4">
+                                <div className="flex flex-col">
+                                    <span className={"text-sm"}>
+                                        {t("main.textureMap")}
+                                    </span>
                                     <Button
+                                        onClick={selectTextureMap}
                                         className={"py-2 text-sm"}
-                                        disabled={false}
-                                        text={t("main.addTexture")}
-                                        onClick={addTextureA}
+                                        text={t("main.selectTextureMap")}
                                     />
                                 </div>
                                 <div className="flex flex-col">
-                                    <div className="flex flex-col gap-4">
-                                        <div className="flex flex-col">
-                                            <span className={"text-sm"}>
-                                                {t("main.textureMap")}
-                                            </span>
-                                            <Button
-                                                onClick={selectTextureMap}
-                                                className={"py-2 text-sm"}
-                                                text={t("main.selectTextureMap")}
-                                            />
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <span className={"text-sm"}>
-                                                {t("main.tilesFolder")}
-                                            </span>
-                                            <Button
-                                                className={"py-2 text-sm"}
-                                                text={t("main.selectTilesFolder")}
-                                            />
-                                        </div>
-                                    </div>
-                                    <Separator className={"my-4"} />
+                                    <span className={"text-sm"}>
+                                        {t("main.tilesFolder")}
+                                    </span>
                                     <Button
-                                        disabled={importReady}
-                                        text={t("main.import")}
+                                        onClick={openModal}
+                                        className={"py-2 text-sm"}
+                                        text={t("main.selectTilesFolder")}
                                     />
+                                    <Modal isVisible={isVisible} onClose={closeModal} title={t('main.success')} style={"success"}>
+                                        <p></p>
+                                    </Modal>
                                 </div>
                             </div>
-                        </Card>
-                    </div>
-                    <div className="basis-10/12 flex justify-center">
-                        <div className="gwent-map">
-                            <TextureRangeSelector />
-                            <div className={"map-container"}>
-                                <canvas className={"map-canvas"} ref={canvasRef}></canvas>
-                            </div>
+                            <Separator className={"my-4"} />
+                            <Button
+                                disabled={importReady}
+                                text={t("main.import")}
+                            />
                         </div>
+                    </div>
+                </Card>
+            </div>
+            <div className="basis-8/12 flex justify-center">
+                <div className="gwent-map">
+                    <TextureRangeSelector />
+                    <div className={"map-container"}>
+                        <canvas className={"map-canvas"} ref={canvasRef}></canvas>
                     </div>
                 </div>
             </div>
