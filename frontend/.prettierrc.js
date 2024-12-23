@@ -4,8 +4,17 @@ export default {
     semi: true,
     singleQuote: false,
     bracketSameLine: true,
+    printWidth: 90,
+
     plugins: ["@trivago/prettier-plugin-sort-imports"],
-    importOrder: ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+
+    importOrder: [
+        "^(react/(.*)$)|^(react$)",
+        "<THIRD_PARTY_MODULES>",
+        "^@bindings/(.*)$",
+        "^@shared/(.*)$",
+        "^[./]",
+    ],
     importOrderSeparation: true,
     importOrderSortSpecifiers: true,
 };

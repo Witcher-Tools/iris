@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
+
+import { selectTexture, setTextures } from "@/redux/action/iris.js";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectTexture, setTextures } from "../../../../redux/action/iris.js";
 import "./Range.css";
 
 const TOTAL_RANGE = 255;
@@ -12,9 +13,7 @@ const TextureRangeSelector = () => {
     const dispatch = useDispatch();
 
     const textures = useSelector((state) => state.mainState.textures);
-    const selectedRangeIndex = useSelector(
-        (state) => state.mainState.selectedTexture
-    );
+    const selectedRangeIndex = useSelector((state) => state.mainState.selectedTexture);
 
     useEffect(() => {
         console.log("textures", textures);
@@ -36,9 +35,7 @@ const TextureRangeSelector = () => {
         const updatedTextures = textures.map((texture, i) => {
             if (i === index) {
                 const maxRight =
-                    i < textures.length - 1
-                        ? textures[i + 1].end - 1
-                        : TOTAL_RANGE;
+                    i < textures.length - 1 ? textures[i + 1].end - 1 : TOTAL_RANGE;
                 const minLeft = i > 0 ? texture.start : 1;
                 return {
                     ...texture,
@@ -91,10 +88,7 @@ const TextureRangeSelector = () => {
             const newIndex = Math.max(0, selectedRangeIndex - 1);
             dispatch(selectTexture(newIndex));
         } else if (e.key === "ArrowUp") {
-            const newIndex = Math.min(
-                textures.length - 1,
-                selectedRangeIndex + 1
-            );
+            const newIndex = Math.min(textures.length - 1, selectedRangeIndex + 1);
             dispatch(selectTexture(newIndex));
         }
     };
@@ -140,15 +134,11 @@ const TextureRangeSelector = () => {
                             bottom: `${(texture.start / TOTAL_RANGE) * 100}%`,
                             height: `${((texture.end - texture.start + 1) / TOTAL_RANGE) * 100}%`,
                         }}>
-                        <span className="texture-label">
-                            {texture.vertical}
-                        </span>
+                        <span className="texture-label">{texture.vertical}</span>
                         {index !== textures.length - 1 && (
                             <div
                                 className="handle handle-right"
-                                onMouseDown={(e) =>
-                                    handleMouseDown(e, index)
-                                }></div>
+                                onMouseDown={(e) => handleMouseDown(e, index)}></div>
                         )}
                     </div>
                 ))}

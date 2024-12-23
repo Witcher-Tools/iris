@@ -8,6 +8,7 @@
         "selectTextureMap": "Вибрати текстурну карту",
         "selectTilesFolder": "Вибрати папку тайлів",
         "textureMap": "Карта текстур: ",
-        "tilesFolder": "Папка тайлів: "
+        "tilesFolder": "Папка тайлів: ",
+        "import": "Імпортувати"
     }
 }

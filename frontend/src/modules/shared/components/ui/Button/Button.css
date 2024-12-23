@@ -68,8 +68,8 @@
     &:hover {
         ::after,
         ::before {
-            filter: grayscale(0) brightness(1.1) sepia(1) hue-rotate(105deg)
-                saturate(6) brightness(1.4);
+            filter: grayscale(0) brightness(1.1) sepia(1) hue-rotate(105deg) saturate(6)
+                brightness(1.4);
         }
     }
 

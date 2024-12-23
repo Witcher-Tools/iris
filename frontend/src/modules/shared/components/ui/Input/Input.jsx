@@ -1,5 +1,6 @@
-import PropTypes from "prop-types";
 import React, { forwardRef, useState } from "react";
+
+import PropTypes from "prop-types";
 
 import "./Input.css";
 

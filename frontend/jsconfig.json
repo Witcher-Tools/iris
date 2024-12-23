@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"],
+            "@bindings/*": ["./bindings/*"],
+            "@shared/*": ["./src/modules/shared/*"]
+        }
+    }
+}

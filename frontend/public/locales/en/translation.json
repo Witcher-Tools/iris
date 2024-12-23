@@ -8,6 +8,7 @@
         "selectTextureMap": "Select texture map",
         "selectTilesFolder": "Select tiles folder",
         "textureMap": "Texture map: ",
-        "tilesFolder": "Tiles folder: "
+        "tilesFolder": "Tiles folder: ",
+        "import": "Import"
     }
 }

@@ -1,10 +1,11 @@
-import PropTypes from "prop-types";
 import React from "react";
+
+import PropTypes from "prop-types";
 import { twMerge } from "tailwind-merge";
 
 import "./Button.css";
 
-const CustomButton = ({ text, onClick, disabled, ...props }) => {
+const Button = ({ text, onClick, disabled, ...props }) => {
     return (
         <button
             disabled={disabled}
@@ -18,15 +19,15 @@ const CustomButton = ({ text, onClick, disabled, ...props }) => {
     );
 };
 
-CustomButton.propTypes = {
+Button.propTypes = {
     text: PropTypes.string.isRequired,
     onClick: PropTypes.func,
     disabled: PropTypes.bool,
 };
 
-CustomButton.defaultProps = {
+Button.defaultProps = {
     onClick: () => {},
     disabled: false,
 };
 
-export default CustomButton;
+export default Button;
