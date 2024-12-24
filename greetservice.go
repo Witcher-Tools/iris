@@ -5,6 +5,8 @@ import (
 	"image/png"
 	"os"
 
+	"changeme/pkg/utils/encoder"
+
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
 
@@ -44,5 +46,11 @@ func (g *GreetService) SelectTextureMap() string {
 		panic(err)
 	}
 
-	return base64Image
+	res, err = encoder.EncodeToBase64(img)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return res
 }

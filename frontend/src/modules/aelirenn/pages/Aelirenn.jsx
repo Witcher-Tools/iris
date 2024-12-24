@@ -6,7 +6,7 @@ import Paragraph from "@shared/components/ui/Paragraph/Paragraph.jsx";
 function Aelirenn() {
     return (
         <>
-            <div className="basis-4/12 h-full relative z-10 ml-24">
+            <div className="basis-4/12 2xl:basis-3/12 h-full relative z-10 ml-24">
                 <Card>
                     <Paragraph className={"italic"}>
                         Цей інструмент дозволить імпортувати рослинність у світ "Відьмака" з підтримкою створення біомів та плавного переходу між ними.
@@ -17,7 +17,7 @@ function Aelirenn() {
                     </Paragraph>
                 </Card>
             </div>
-            <div className="basis-8/12 flex justify-center">
+            <div className="basis-8/12 2xl:basis-9/12 2xl:mr-24 flex justify-center">
                 <div className="gwent-map">
                 </div>
             </div>

@@ -113,7 +113,7 @@ function Iris() {
 
     return (
         <>
-            <div className="basis-4/12 h-full relative z-2 ml-24">
+            <div className="basis-4/12 2xl:basis-3/12 h-full relative z-2 ml-24">
                 <Card>
                     <div className="flex flex-col content-between h-full justify-between">
                         <div className="flex flex-col gap-4">
@@ -191,7 +191,7 @@ function Iris() {
                     </div>
                 </Card>
             </div>
-            <div className="basis-8/12 flex justify-center">
+            <div className="basis-8/12 2xl:basis-9/12 2xl:mr-24 flex justify-center">
                 <div className="gwent-map">
                     <TextureRangeSelector />
                     <div className={"map-container"}>

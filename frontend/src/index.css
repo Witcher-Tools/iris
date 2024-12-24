@@ -40,7 +40,7 @@ body {
     gap: 0.5rem;
     padding: 0.5rem 0;
     top: 45px;
-    right: 86%;
+    left: 55px;
     position: absolute;
     transform: rotate(90deg);
     z-index: 0;

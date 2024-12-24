@@ -5,7 +5,7 @@
     gap: 0.5rem;
     padding: 0.5rem 0;
     top: 80px;
-    right: 65%;
+    left: 55px;
     position: absolute;
     transform: rotate(90deg);
     z-index: -3;
