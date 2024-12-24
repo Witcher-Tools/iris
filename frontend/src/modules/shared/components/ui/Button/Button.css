@@ -33,11 +33,6 @@
         --gwentButtonInitBackgroundEnd 0.15s ease-in-out;
     user-select: none;
 
-    &:active {
-        --gwentButtonInitBackground: rgb(253, 227, 116);
-        --gwentButtonInitBackgroundEnd: rgb(255, 175, 74);
-    }
-
     &[disabled] {
         filter: grayscale(0.8) brightness(0.8);
         pointer-events: none;
@@ -73,6 +68,21 @@
         }
     }
 
+    &:focus {
+        outline: none;
+
+        ::after,
+        ::before {
+            filter: grayscale(0) brightness(1.1) sepia(1) hue-rotate(105deg) saturate(6)
+            brightness(1.4);
+        }
+    }
+
+    &:active {
+        --gwentButtonInitBackground: rgb(253, 227, 116);
+        --gwentButtonInitBackgroundEnd: rgb(255, 175, 74);
+    }
+
     &:active {
         span {
             --gwentButtonTextInitBackground: rgb(35 34 32);
@@ -85,8 +95,7 @@
                 to right,
                 var(--gwentButtonTextInitBackground) 0%,
                 var(--gwentButtonTextInitBackgroundEnd) 100%
-            )
-            text;
+            ) text;
         -webkit-text-fill-color: transparent;
 
         transition:

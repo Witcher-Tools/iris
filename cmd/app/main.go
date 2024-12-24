@@ -8,18 +8,15 @@ import (
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
 
-//go:embed frontend/dist
+//go:embed ../../frontend/dist
 var assets embed.FS
 
 func main() {
 	app := application.New(application.Options{
-		Name:        "tes",
-		Description: "A demo of using raw HTML & CSS",
+		Name:        "Iris",
+		Description: "RedKit texture map importer.",
 		Services: []application.Service{
 			application.NewService(&GreetService{}),
-			application.NewService(&FileServer{}, application.ServiceOptions{
-				Route: "/files",
-			}),
 		},
 		Assets: application.AssetOptions{
 			Handler: application.AssetFileServerFS(assets),

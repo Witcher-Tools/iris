@@ -1,8 +1,6 @@
 package main
 
 import (
-	"bytes"
-	"encoding/base64"
 	"fmt"
 	"image/png"
 	"os"
@@ -45,14 +43,6 @@ func (g *GreetService) SelectTextureMap() string {
 	if err != nil {
 		panic(err)
 	}
-
-	var buf bytes.Buffer
-	err = png.Encode(&buf, img)
-	if err != nil {
-		return ""
-	}
-
-	base64Image := base64.StdEncoding.EncodeToString(buf.Bytes())
 
 	return base64Image
 }
