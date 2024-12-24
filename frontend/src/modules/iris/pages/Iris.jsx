@@ -14,11 +14,20 @@ import TextureRangeSelector from "../components/Range/Range.jsx";
 import "./Iris.css";
 import {useModal} from "@shared/hooks/useModal.js";
 import Modal from "@shared/components/ui/Modal/Modal.jsx";
+import {Import} from "@bindings/changeme/internal/iris/service/importer/importer.js";
+import {ImportOptions} from "@bindings/changeme/internal/iris/service/importer/index.js";
 
 function Iris() {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
-    const { isVisible, openModal, closeModal } = useModal();
+    const {
+        isVisible,
+        modalStyle,
+        modalTitle,
+        modalContent,
+        openModal,
+        closeModal,
+    } = useModal();
 
     const dispatch = useDispatch();
 
@@ -50,6 +59,23 @@ function Iris() {
 
         dispatch(addTexture(texture));
     };
+
+    const loadTiles = async () => {
+        const importOptions = new ImportOptions({
+            ImportFolder: "D:\\paf\\local_test\\workspace\\levels\\mylevel3\\terrain_tiles",
+            TextureMap: "C:\\Users\\khevp\\OneDrive\\Документи\\Gaea\\Builds\\6\\031\\CLUTer – копія (2).png",
+        });
+
+        const res = await Import(importOptions);
+
+        if (res === "") {
+            openModal("success", t("main.success"), t("main.successImport"));
+        } else {
+            openModal("error", t("main.error"), res);
+        }
+
+        console.log(res);
+    }
 
     const selectTextureMap = async () => {
         const response = await SelectTextureMap();
@@ -173,16 +199,21 @@ function Iris() {
                                         {t("main.tilesFolder")}
                                     </span>
                                     <Button
-                                        onClick={openModal}
+                                        onClick={loadTiles}
                                         className={"py-2 text-sm"}
                                         text={t("main.selectTilesFolder")}
                                     />
-                                    <Modal isVisible={isVisible} onClose={closeModal} title={t('main.success')} style={"success"}>
-                                        <p></p>
+                                    <Modal
+                                        isVisible={isVisible}
+                                        onClose={closeModal}
+                                        title={modalTitle}
+                                        style={modalStyle}
+                                    >
+                                        <p>{modalContent}</p>
                                     </Modal>
                                 </div>
                             </div>
-                            <Separator className={"my-4"} />
+                            <Separator className={"my-4"}/>
                             <Button
                                 disabled={importReady}
                                 text={t("main.import")}
@@ -193,7 +224,7 @@ function Iris() {
             </div>
             <div className="basis-8/12 2xl:basis-9/12 2xl:mr-24 flex justify-center">
                 <div className="gwent-map">
-                    <TextureRangeSelector />
+                    <TextureRangeSelector/>
                     <div className={"map-container"}>
                         <canvas className={"map-canvas"} ref={canvasRef}></canvas>
                     </div>

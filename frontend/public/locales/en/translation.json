@@ -11,6 +11,7 @@
         "tilesFolder": "Tiles folder: ",
         "import": "Import",
         "error": "Error",
-        "success": "Success"
+        "success": "Success",
+        "successImport": "Textures was imported successfully!"
     }
 }

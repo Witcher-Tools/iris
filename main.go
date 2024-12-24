@@ -5,6 +5,8 @@ import (
 	_ "embed"
 	"log"
 
+	"changeme/internal/iris/service/importer"
+
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
 
@@ -17,6 +19,7 @@ func main() {
 		Description: "RedKit texture map importer.",
 		Services: []application.Service{
 			application.NewService(&GreetService{}),
+			application.NewService(&importer.Importer{}),
 		},
 		Assets: application.AssetOptions{
 			Handler: application.AssetFileServerFS(assets),
@@ -27,7 +30,7 @@ func main() {
 	})
 
 	_ = app.NewWebviewWindowWithOptions(application.WebviewWindowOptions{
-		Title: "Іріс",
+		Title: "Iris",
 
 		Mac: application.MacWindow{
 			InvisibleTitleBarHeight: 50,
