@@ -4,7 +4,10 @@ go 1.22.4
 
 toolchain go1.23.2
 
-require github.com/wailsapp/wails/v3 v3.0.0-alpha.7
+require (
+	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
+	github.com/wailsapp/wails/v3 v3.0.0-alpha.7
+)
 
 require (
 	dario.cat/mergo v1.0.0 // indirect

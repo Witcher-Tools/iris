@@ -23,7 +23,6 @@ func main() {
 		Icon:        logo,
 		Description: "RedKit texture map importer.",
 		Services: []application.Service{
-			application.NewService(&GreetService{}),
 			application.NewService(&importer.Importer{}),
 		},
 		Assets: application.AssetOptions{
@@ -48,7 +47,7 @@ func main() {
 		MinHeight:     890,
 		DisableResize: true,
 
-		BackgroundColour: application.NewRGB(27, 38, 54),
+		BackgroundColour: application.NewRGB(255, 255, 255),
 
 		URL: "/",
 	})

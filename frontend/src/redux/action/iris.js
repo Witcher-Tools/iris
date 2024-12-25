@@ -1,4 +1,4 @@
-import { UPDATE_TEXTURES } from "../types/iris.js";
+import {UPDATE_TEXTURES} from "../types/iris.js";
 
 export const setIrisState = (payload) => {
     return {
@@ -6,8 +6,6 @@ export const setIrisState = (payload) => {
         payload,
     };
 };
-
-const TOTAL_RANGE = 255;
 
 export const addTexture = (texture) => (dispatch, getState) => {
     const TOTAL_RANGE = 255;
@@ -47,6 +45,22 @@ export const setTextures = (textures) => (dispatch, getState) => {
     dispatch(
         setIrisState({
             textures: textures,
+        })
+    );
+};
+
+export const setImportFolder = (importFolder) => (dispatch, getState) => {
+    dispatch(
+        setIrisState({
+            importFolder: importFolder,
+        })
+    );
+};
+
+export const setImportTextureMap = (importTextureMap) => (dispatch, getState) => {
+    dispatch(
+        setIrisState({
+            importTextureMap: importTextureMap,
         })
     );
 };

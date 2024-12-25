@@ -2,9 +2,7 @@ import React, {useState} from "react";
 import Iris from "@/modules/iris/pages/Iris.jsx";
 import Aelirenn from "@/modules/aelirenn/pages/Aelirenn.jsx";
 
-
 function App() {
-
     const renderContent = () => {
         switch (activeTab) {
             case 0:
