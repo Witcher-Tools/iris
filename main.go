@@ -3,9 +3,10 @@ package main
 import (
 	"embed"
 	_ "embed"
+	_ "image/png"
 	"log"
 
-	"changeme/internal/iris/service/importer"
+	"changeme/internal/texture/service/importer"
 
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
@@ -13,9 +14,13 @@ import (
 //go:embed frontend/dist
 var assets embed.FS
 
+//go:embed icon.png
+var logo []byte
+
 func main() {
 	app := application.New(application.Options{
 		Name:        "Iris",
+		Icon:        logo,
 		Description: "RedKit texture map importer.",
 		Services: []application.Service{
 			application.NewService(&GreetService{}),

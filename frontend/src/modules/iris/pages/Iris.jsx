@@ -14,8 +14,8 @@ import TextureRangeSelector from "../components/Range/Range.jsx";
 import "./Iris.css";
 import {useModal} from "@shared/hooks/useModal.js";
 import Modal from "@shared/components/ui/Modal/Modal.jsx";
-import {Import} from "@bindings/changeme/internal/iris/service/importer/importer.js";
 import {ImportOptions} from "@bindings/changeme/internal/iris/service/importer/index.js";
+import {Import} from "@bindings/changeme/internal/texture/service/importer/importer.js";
 
 function Iris() {
     const {t} = useTranslation();
@@ -68,10 +68,10 @@ function Iris() {
 
         const res = await Import(importOptions);
 
-        if (res === "") {
+        if (res === null) {
             openModal("success", t("main.success"), t("main.successImport"));
         } else {
-            openModal("error", t("main.error"), res);
+            openModal("error", t("main.error"), t("import." + res.Code));
         }
 
         console.log(res);

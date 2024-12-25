@@ -20,7 +20,7 @@
         animation: slideIn 0.3s ease;
 
         .modal-title {
-            background-image: url("images/modal/tooltip-neu-9440b64f (1).jpg");
+            background-image: url("/images/modal/tooltip-neu-9440b64f (1).jpg");
             background-repeat: no-repeat;
             background-position: center top;
             background-size: 100% 100%;
@@ -30,11 +30,11 @@
             font-size: 1.6rem;
 
             &.error {
-                background-image: url("images/modal/tooltip-mon-096782a9.jpg");
+                background-image: url("/images/modal/tooltip-mon-096782a9.jpg");
             }
 
             &.success {
-                background-image: url("images/modal/tooltip-sco-e98bbebc.jpg");
+                background-image: url("/images/modal/tooltip-sco-e98bbebc.jpg");
             }
         }
 
@@ -42,8 +42,8 @@
             padding: 1rem 1.9rem 1.7rem;
 
             background-image:
-                    url("images/modal/desktop-card-details-bottom-2819f061.jpg"),
-                    url("images/modal/desktop-card-details-center-ff10cbc6.jpg");
+                    url("/images/modal/desktop-card-details-bottom-2819f061.jpg"),
+                    url("/images/modal/desktop-card-details-center-ff10cbc6.jpg");
             background-size: 100%, 100% 90%;
             background-repeat: no-repeat, repeat-y;
             background-position: center 101%, center top;

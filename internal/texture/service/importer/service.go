@@ -31,32 +31,35 @@ func New() *Importer {
 	return &Importer{}
 }
 
-func (i *Importer) Import(options *ImportOptions) string {
+type ErrorResponse struct {
+	Code string
+}
+
+func (i *Importer) Import(options *ImportOptions) *ErrorResponse {
 	colormapFile, err := os.Open(options.TextureMap)
 	if err != nil {
-		return "failed to open textures map file"
+		return &ErrorResponse{Code: "ERROR_OPEN_TEXTURE_MAP"}
 	}
 	defer colormapFile.Close()
 
 	colormapImg, _, err := image.DecodeConfig(colormapFile)
 	if err != nil {
-		return "failed to decode colormap image"
+		return &ErrorResponse{Code: "ERROR_DECODE_COLORMAP"}
 	}
 
 	colormapWidth := colormapImg.Width
 	colormapHeight := colormapImg.Height
 
 	if colormapWidth != colormapHeight {
-		return "colormap image is not square"
+		return &ErrorResponse{Code: "ERROR_NON_SQUARE_COLORMAP"}
 	}
 
 	tileFiles, err := filepath.Glob(filepath.Join(options.ImportFolder, "*.w2ter"))
-
 	if err != nil {
-		return "failed to read tiles or no tiles found in the folder"
+		return &ErrorResponse{Code: "ERROR_READ_TILES"}
 	}
 	if len(tileFiles) == 0 {
-		return "tiles folder contains no tile files"
+		return &ErrorResponse{Code: "ERROR_NO_TILE_FILES"}
 	}
 
 	var tileResolution int
@@ -75,27 +78,27 @@ func (i *Importer) Import(options *ImportOptions) string {
 		fmt.Printf("Tile resolution: %d\n", resPart)
 
 		if err != nil {
-			return "invalid tile resolution in filename %s"
+			return &ErrorResponse{Code: "ERROR_INVALID_TILE_RESOLUTION"}
 		}
 	}
 
 	if _, ok := resolutionStartAddress[tileResolution]; !ok {
-		return "tile resolution not supported in filename %s"
+		return &ErrorResponse{Code: "ERROR_UNSUPPORTED_TILE_RESOLUTION"}
 	}
 
 	mapGridSize := int(math.Sqrt(float64(tileCount)))
 	mapGridResolution := mapGridSize * tileResolution
 
 	if mapGridResolution != colormapWidth {
-		return "colormap width does not match the map resolution"
+		return &ErrorResponse{Code: "ERROR_COLORMAP_RESOLUTION_MISMATCH"}
 	}
 
 	err = i.doBackup(options)
 	if err != nil {
-		return "failed to backup tiles"
+		return &ErrorResponse{Code: "ERROR_BACKUP_FAILED"}
 	}
 
-	return ""
+	return nil
 }
 
 func (i *Importer) doBackup(options *ImportOptions) error {

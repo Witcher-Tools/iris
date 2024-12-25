@@ -13,5 +13,16 @@
         "error": "Error",
         "success": "Success",
         "successImport": "Textures was imported successfully!"
+    },
+    "import": {
+        "ERROR_OPEN_TEXTURE_MAP": "Failed to open the texture map file.",
+        "ERROR_DECODE_COLORMAP": "Failed to decode the colormap image.",
+        "ERROR_NON_SQUARE_COLORMAP": "The colormap image is not square.",
+        "ERROR_READ_TILES": "Failed to read tiles or no tiles found.",
+        "ERROR_NO_TILE_FILES": "The tiles folder contains no tile files.",
+        "ERROR_INVALID_TILE_RESOLUTION": "The tile resolution in the filename is invalid.",
+        "ERROR_UNSUPPORTED_TILE_RESOLUTION": "The tile resolution is not supported.",
+        "ERROR_COLORMAP_RESOLUTION_MISMATCH": "The colormap resolution does not match the expected resolution.",
+        "ERROR_BACKUP_FAILED": "Failed to create a backup of the tiles."
     }
 }
