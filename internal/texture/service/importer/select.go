@@ -20,7 +20,7 @@ type SelectImportTextureMapResponse struct {
 	ImportTextureMapBase64 string
 }
 
-func (i *Importer) SelectTileFolder() *response.Response[SelectImportFolderResponse] {
+func (i *Importer) SelectImportFolder() *response.Response[SelectImportFolderResponse] {
 	dialog := application.OpenFileDialogWithOptions(&application.OpenFileDialogOptions{
 		Title: "Select tiles folder",
 
@@ -31,7 +31,7 @@ func (i *Importer) SelectTileFolder() *response.Response[SelectImportFolderRespo
 	folder, err := dialog.PromptForSingleSelection()
 
 	if err != nil {
-		return response.AsError[SelectImportFolderResponse]("")
+		return response.AsError[SelectImportFolderResponse]("ERROR_OPEN_FOLDER")
 	}
 
 	return response.New(response.WithData(SelectImportFolderResponse{

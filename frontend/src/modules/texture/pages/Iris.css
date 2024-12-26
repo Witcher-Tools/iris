@@ -27,11 +27,6 @@
     display: block;
 }
 
-/*.text-sm {*/
-/*    background: linear-gradient(to right, var(--gwentButtonTextInitBackground) 0%, var(--gwentButtonTextInitBackgroundEnd) 100%) text;*/
-/*    -webkit-text-fill-color: transparent;*/
-/*}*/
-
 .gwent-map {
     background-image: url("/images/faction-select-bg-init-8e4cc485 (8).jpg");
     background-size: 100% 100%;

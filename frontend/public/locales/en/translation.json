@@ -23,6 +23,7 @@
         "ERROR_INVALID_TILE_RESOLUTION": "The tile resolution in the filename is invalid.",
         "ERROR_UNSUPPORTED_TILE_RESOLUTION": "The tile resolution is not supported.",
         "ERROR_COLORMAP_RESOLUTION_MISMATCH": "The colormap resolution does not match the expected resolution.",
-        "ERROR_BACKUP_FAILED": "Failed to create a backup of the tiles."
+        "ERROR_BACKUP_FAILED": "Failed to create a backup of the tiles.",
+        "ERROR_OPEN_FOLDER": "Failed to open the folder."
     }
 }

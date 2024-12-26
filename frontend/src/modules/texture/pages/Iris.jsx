@@ -13,12 +13,14 @@ import TextureRangeSelector from "../components/Range/Range.jsx";
 import "./Iris.css";
 import {useModal} from "@shared/hooks/useModal.js";
 import Modal from "@shared/components/ui/Modal/Modal.jsx";
-import {ImportOptions} from "@bindings/changeme/internal/iris/service/importer/index.js";
 import {
     Import,
-    SelectTextureMap,
-    SelectTileFolder
+    SelectImportFolder,
+    SelectTextureMap
 } from "@bindings/changeme/internal/texture/service/importer/importer.js";
+import {trimString} from "@/utils/string.js";
+import {ImportOptions} from "@bindings/changeme/internal/texture/service/importer/index.js";
+import {Texture} from "@bindings/changeme/internal/texture/model/texture/index.js";
 
 function Iris() {
     const {t} = useTranslation();
@@ -65,9 +67,24 @@ function Iris() {
     };
 
     const doImport = async () => {
+        const Textures = textures.map(el => (
+            new Texture({
+                    verticalTexture: parseInt(el.verticalTexture),
+                    horizontalTexture: parseInt(el.horizontalTexture),
+                    scale: parseInt(el.scale),
+                    slope: parseInt(el.slope),
+                    start: parseInt(el.start),
+                    end: parseInt(el.end),
+                }
+            )
+        ))
+
+        console.log(Textures[0]);
+
         const response = await Import(new ImportOptions({
             ImportFolder: importFolder,
-            TextureMap: importTextureMap
+            TextureMap: importTextureMap,
+            Textures: Textures
         }));
 
         if (response.Error !== null) {
@@ -79,14 +96,14 @@ function Iris() {
     }
 
     const selectImportFolder = async () => {
-        const response = await SelectTileFolder();
+        const response = await SelectImportFolder();
 
         if (response.Error !== null) {
             openModal("error", t("main.error"), t(`import.${response.Error.Code}`));
             return
         }
 
-        dispatch(setImportFolder(response.Data.I));
+        dispatch(setImportFolder(response.Data.ImportFolder));
     }
 
     const selectImportTextureMap = async () => {
@@ -98,10 +115,10 @@ function Iris() {
         }
 
         const img = new Image();
-        img.src = `data:image/png;base64,${response.Data.ImportTextureMap}`;
-
+        img.src = `data:image/png;base64,${response.Data.ImportTextureMapBase64}`;
         setImageSrc(img.src);
-        dispatch(setImportTextureMap(response.Data.ImportTextureMapBase64));
+
+        dispatch(setImportTextureMap(response.Data.ImportTextureMap));
     };
 
     useEffect(() => {
@@ -193,8 +210,8 @@ function Iris() {
                         <div className="flex flex-col">
                             <div className="flex flex-col gap-4">
                                 <div className="flex flex-col">
-                                    <span className={"text-sm"}>
-                                        {t("main.textureMap") }
+                                    <span className={"text-sm text-gradient"}>
+                                        {t("main.textureMap") + trimString(importTextureMap)}
                                     </span>
                                     <Button
                                         onClick={selectImportTextureMap}
@@ -203,8 +220,8 @@ function Iris() {
                                     />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className={"text-sm"}>
-                                        {t("main.tilesFolder")}
+                                    <span className={"text-sm text-gradient"}>
+                                        {t("main.tilesFolder") + trimString(importFolder)}
                                     </span>
                                     <Button
                                         onClick={selectImportFolder}

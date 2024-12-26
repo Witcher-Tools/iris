@@ -17,8 +17,6 @@
 body {
     background: #000000;
 
-    /*border-image-source: url("images/frame-fa00d6ac.png");*/
-    /*border-width: 24px;*/
     border-style: solid;
     border-radius: 0;
     border-image-slice: 22;
@@ -54,7 +52,6 @@ body {
     height: 10rem;
     cursor: pointer;
     clip-path: polygon(0 0%, 100% 0%, 100% 100%, 50% 87%, 0% 100%, 0% 0%);
-    /*box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.5), 0 4px 6px rgba(0, 0, 0, 0.3);*/
     background-size: cover;
     transition: 0.3s ease-in-out;
     top: 0;
@@ -72,4 +69,9 @@ body {
     &:hover {
         top: 10px;
     }
+}
+
+.text-gradient {
+    background: linear-gradient(to right, var(--gwentButtonTextInitBackground) 0%, var(--gwentButtonTextInitBackgroundEnd) 100%) text;
+    -webkit-text-fill-color: transparent;
 }

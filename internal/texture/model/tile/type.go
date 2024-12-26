@@ -1,17 +1,13 @@
 package tile
 
 type Tile struct {
-	InFile  string
-	OutFile string
-
-	ColorMap []byte
+	InFile   string
+	ColorMap [][]byte
 }
 
-func New(inFile string, outFile string, colorMap []byte) *Tile {
+func New(inFile string, colorMap [][]byte) *Tile {
 	return &Tile{
-		InFile:  inFile,
-		OutFile: outFile,
-
+		InFile:   inFile,
 		ColorMap: colorMap,
 	}
 }

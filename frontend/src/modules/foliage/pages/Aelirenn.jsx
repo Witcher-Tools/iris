@@ -2,7 +2,6 @@ import Card from "@shared/components/ui/Card/Card.jsx";
 import React from "react";
 import Paragraph from "@shared/components/ui/Paragraph/Paragraph.jsx";
 
-
 function Aelirenn() {
     return (
         <>

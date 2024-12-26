@@ -1,8 +1,10 @@
 import React, {useState} from "react";
-import Iris from "@/modules/iris/pages/Iris.jsx";
-import Aelirenn from "@/modules/aelirenn/pages/Aelirenn.jsx";
+import Iris from "@/modules/texture/pages/Iris.jsx";
+import Aelirenn from "@/modules/foliage/pages/Aelirenn.jsx";
 
 function App() {
+    const [activeTab, setActiveTab] = useState(0);
+
     const renderContent = () => {
         switch (activeTab) {
             case 0:
@@ -13,8 +15,6 @@ function App() {
                 return null;
         }
     };
-
-    const [activeTab, setActiveTab] = useState(0);
 
     const tabs = [
         { id: 0, icon: "images/nilfgaard-ribbon-ea60db11.jpg" },

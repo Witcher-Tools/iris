@@ -23,6 +23,7 @@
         "ERROR_INVALID_TILE_RESOLUTION": "Роздільна здатність тайлів у назві файлу є недійсною.",
         "ERROR_UNSUPPORTED_TILE_RESOLUTION": "Роздільна здатність тайлів не підтримується.",
         "ERROR_COLORMAP_RESOLUTION_MISMATCH": "Роздільна здатність текстурної карти не відповідає очікуваній.",
-        "ERROR_BACKUP_FAILED": "Не вдалося створити резервну копію тайлів."
+        "ERROR_BACKUP_FAILED": "Не вдалося створити резервну копію тайлів.",
+        "ERROR_OPEN_FOLDER": "Не вдалося відкрити папку."
     }
 }
