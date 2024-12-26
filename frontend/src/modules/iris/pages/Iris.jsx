@@ -86,7 +86,7 @@ function Iris() {
             return
         }
 
-        dispatch(setImportFolder(response.Data.ImportFolder));
+        dispatch(setImportFolder(response.Data.I));
     }
 
     const selectImportTextureMap = async () => {
@@ -94,15 +94,14 @@ function Iris() {
 
         if (response.Error !== null) {
             openModal("error", t("main.error"), t(`import.${response.Error.Code}`))
-
             return
         }
 
         const img = new Image();
-        img.src = `data:image/png;base64,${response.Data.ImportTextureMapBase64}`;
+        img.src = `data:image/png;base64,${response.Data.ImportTextureMap}`;
 
         setImageSrc(img.src);
-        dispatch(setImportTextureMap(response.Data.ImportTextureMap));
+        dispatch(setImportTextureMap(response.Data.ImportTextureMapBase64));
     };
 
     useEffect(() => {
@@ -138,16 +137,6 @@ function Iris() {
                         data[i] = 0;
                         data[i + 1] = 255;
                         data[i + 2] = 0;
-                    }
-
-                    continue;
-                }
-
-                for (let j = 0; j < textures.length; j++) {
-                    if (greyscale >= textures[j].start && greyscale <= textures[j].end) {
-                        data[i] = textures[j].red;
-                        data[i + 1] = textures[j].green;
-                        data[i + 2] = textures[j].blue;
                     }
                 }
             }

@@ -5,46 +5,40 @@ type ErrorResponse struct {
 	Message string
 }
 
-type Response struct {
-	Success bool
-	Data    any
-	Error   *ErrorResponse
+type Response[T any] struct {
+	Data  T
+	Error *ErrorResponse
 }
 
-type Option func(*Response)
+type Option[T any] func(*Response[T])
 
-func New(options ...Option) *Response {
-	resp := &Response{}
+func New[T any](options ...Option[T]) *Response[T] {
+	resp := &Response[T]{}
 	for _, opt := range options {
 		opt(resp)
 	}
 	return resp
 }
 
-func WithData(data interface{}) Option {
-	return func(resp *Response) {
-		resp.Success = true
-		resp.Data = data
+func WithData[T any](data T) Option[T] {
+	return func(r *Response[T]) {
+		r.Data = data
+		r.Error = nil
 	}
 }
 
-func WithSuccess() Option {
-	return func(resp *Response) {
-		resp.Success = true
-	}
-}
-
-func WithErrorCode(code string) Option {
-	return func(resp *Response) {
-		resp.Success = false
-
-		if resp.Error == nil {
-			resp.Error = &ErrorResponse{
-				Code: code,
-			}
-			return
+func WithErrorCode[T any](code string) Option[T] {
+	return func(r *Response[T]) {
+		r.Error = &ErrorResponse{
+			Code: code,
 		}
+	}
+}
 
-		resp.Error.Code = code
+func AsError[T any](code string) *Response[T] {
+	return &Response[T]{
+		Error: &ErrorResponse{
+			Code: code,
+		},
 	}
 }
