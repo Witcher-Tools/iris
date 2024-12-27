@@ -5,7 +5,8 @@ import {
     setImportFolder,
     setImportTextureMap,
     setImportTextureMapSrc,
-    setLoading
+    setLoading,
+    setTextures
 } from "@/redux/action/iris.js";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
@@ -39,10 +40,6 @@ function Iris() {
 
     const dispatch = useDispatch();
 
-    const verticalTexture = useRef(null);
-    const horizontalTexture = useRef(null);
-    const slope = useRef(null);
-    const scale = useRef(null);
     const canvasRef = useRef(null);
 
     const textures = useSelector((state) => state.textureState.textures);
@@ -54,10 +51,10 @@ function Iris() {
 
     const addTextureA = () => {
         const texture = {
-            verticalTexture: parseInt(verticalTexture.current.value),
-            horizontalTexture: parseInt(horizontalTexture.current.value),
-            slope: parseInt(slope.current.value),
-            scale: parseInt(scale.current.value)
+            verticalTexture: 1,
+            horizontalTexture: 1,
+            slope: 1,
+            scale: 1
         };
 
         dispatch(addTexture(texture));
@@ -148,6 +145,20 @@ function Iris() {
         };
     }, [textures, selectedTexture, importTextureMapSrc]);
 
+    const handleInputChange = (field, value) => {
+        if (selectedTexture === null) return;
+
+        const updatedTexture = {
+            ...textures[selectedTexture],
+            [field]: parseInt(value) || 0,
+        };
+
+        const updatedTextures = [...textures];
+        updatedTextures[selectedTexture] = updatedTexture;
+
+        dispatch(setTextures(updatedTextures));
+    };
+
     return (
         <>
             <div className="basis-4/12 2xl:basis-3/12 h-full relative z-2 ml-24">
@@ -160,7 +171,8 @@ function Iris() {
                                 min="1"
                                 max="32"
                                 className={"px-4 py-3"}
-                                ref={verticalTexture}
+                                value={textures[selectedTexture]?.verticalTexture || ''}
+                                onChange={(e) => handleInputChange("verticalTexture", e.target.value)}
                             />
                             <Input
                                 label={t("main.horizontalTexture")}
@@ -168,7 +180,8 @@ function Iris() {
                                 min="1"
                                 max="32"
                                 className={"px-4 py-3"}
-                                ref={horizontalTexture}
+                                value={textures[selectedTexture]?.horizontalTexture || ''}
+                                onChange={(e) => handleInputChange("horizontalTexture", e.target.value)}
                             />
                             <Input
                                 label={t("main.slope")}
@@ -176,7 +189,8 @@ function Iris() {
                                 min="1"
                                 max="8"
                                 className={"px-4 py-3"}
-                                ref={slope}
+                                value={textures[selectedTexture]?.slope || ''}
+                                onChange={(e) => handleInputChange("slope", e.target.value)}
                             />
                             <Input
                                 label={t("main.scale")}
@@ -184,7 +198,8 @@ function Iris() {
                                 min="1"
                                 max="8"
                                 className={"px-4 py-3"}
-                                ref={scale}
+                                value={textures[selectedTexture]?.scale || ''}
+                                onChange={(e) => handleInputChange("scale", e.target.value)}
                             />
                             <Button
                                 className={"py-2 text-sm"}

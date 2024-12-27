@@ -114,11 +114,11 @@ const TextureRangeSelector = () => {
         <div className="texture-range-container">
             <div className="range-bar" ref={rangeBarRef}>
                 <div className="grid-lines">
-                    {Array.from({ length: 26 }, (_, i) => (
+                    {Array.from({length: 26}, (_, i) => (
                         <div
                             key={i}
                             className="grid-tick"
-                            style={{ bottom: `${(i / 25) * 100}%` }}>
+                            style={{bottom: `${(i / 25) * 100}%`}}>
                             <span>{Math.round((i / 25) * TOTAL_RANGE)}</span>
                         </div>
                     ))}
@@ -134,7 +134,7 @@ const TextureRangeSelector = () => {
                             bottom: `${(texture.start / TOTAL_RANGE) * 100}%`,
                             height: `${((texture.end - texture.start + 1) / TOTAL_RANGE) * 100}%`,
                         }}>
-                        <span className="texture-label">{texture.vertical}</span>
+                        {/*<span className="texture-label">{texture.verticalTexture}/{texture.horizontalTexture}</span>*/}
                         {index !== textures.length - 1 && (
                             <div
                                 className="handle handle-right"

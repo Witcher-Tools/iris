@@ -61,6 +61,15 @@
     background-color: rgb(253, 227, 116);
 }
 
+.texture-label {
+    position: absolute;
+    font-size: 0.9rem;
+    color: wheat;
+    bottom: 8px;
+    transform: translate(0, 50%);
+    right: 0;
+}
+
 .range-bar-dec {
     position: absolute;
     bottom: 0;
