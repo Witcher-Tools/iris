@@ -1,9 +1,12 @@
 import React, {useState} from "react";
 import Iris from "@/modules/texture/pages/Iris.jsx";
 import Aelirenn from "@/modules/foliage/pages/Aelirenn.jsx";
+import {useSelector} from "react-redux";
 
 function App() {
     const [activeTab, setActiveTab] = useState(0);
+
+    const loading = useSelector((state) => state.textureState.loading);
 
     const renderContent = () => {
         switch (activeTab) {
@@ -17,13 +20,9 @@ function App() {
     };
 
     const tabs = [
-        { id: 0, icon: "images/nilfgaard-ribbon-ea60db11.jpg" },
-        { id: 1, icon: "images/scoia-ribbon-6874c516.jpg" },
+        { id: 0, icon: "images/nilfgaard-ribbon-ea60db11.jpg", loading: loading},
+        { id: 1, icon: "images/scoia-ribbon-6874c516.jpg", loading: false},
     ];
-
-    const handleClick = (index) => {
-        setActiveTab(index);
-    };
 
     return (
         <>
@@ -33,9 +32,9 @@ function App() {
                         {tabs.map((tab, index) => (
                             <div
                                 key={tab.id}
-                                className={`tab-link ${activeTab === index ? "tab-link-selected" : ""}`}
+                                className={`tab-link ${activeTab === index ? "tab-link-selected" : " "} ${tab.loading ? "tab-link-loading" : ""}`}
                                 style={{backgroundImage: `url(${tab.icon})`}}
-                                onClick={() => handleClick(index)}></div>
+                                onClick={() => setActiveTab(index)}></div>
                         ))}
                     </div>
                     {renderContent()}

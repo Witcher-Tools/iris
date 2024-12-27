@@ -1,6 +1,6 @@
 import {UPDATE_TEXTURES} from "../types/iris.js";
 
-export const setIrisState = (payload) => {
+export const setTextureState = (payload) => {
     return {
         type: UPDATE_TEXTURES,
         payload,
@@ -10,7 +10,7 @@ export const setIrisState = (payload) => {
 export const addTexture = (texture) => (dispatch, getState) => {
     const TOTAL_RANGE = 255;
 
-    const currentTextures = getState().mainState.textures || [];
+    const currentTextures = getState().textureState.textures || [];
 
     if (currentTextures.length === 32) {
         return;
@@ -27,7 +27,7 @@ export const addTexture = (texture) => (dispatch, getState) => {
     }));
 
     dispatch(
-        setIrisState({
+        setTextureState({
             textures: recalculatedTextures,
         })
     );
@@ -35,7 +35,7 @@ export const addTexture = (texture) => (dispatch, getState) => {
 
 export const selectTexture = (textureIndex) => (dispatch, getState) => {
     dispatch(
-        setIrisState({
+        setTextureState({
             selectedTexture: textureIndex,
         })
     );
@@ -43,7 +43,7 @@ export const selectTexture = (textureIndex) => (dispatch, getState) => {
 
 export const setTextures = (textures) => (dispatch, getState) => {
     dispatch(
-        setIrisState({
+        setTextureState({
             textures: textures,
         })
     );
@@ -51,7 +51,7 @@ export const setTextures = (textures) => (dispatch, getState) => {
 
 export const setImportFolder = (importFolder) => (dispatch, getState) => {
     dispatch(
-        setIrisState({
+        setTextureState({
             importFolder: importFolder,
         })
     );
@@ -59,8 +59,25 @@ export const setImportFolder = (importFolder) => (dispatch, getState) => {
 
 export const setImportTextureMap = (importTextureMap) => (dispatch, getState) => {
     dispatch(
-        setIrisState({
+        setTextureState({
             importTextureMap: importTextureMap,
+        })
+    );
+};
+
+
+export const setImportTextureMapSrc = (importTextureMapSrc) => (dispatch, getState) => {
+    dispatch(
+        setTextureState({
+            importTextureMapSrc: importTextureMapSrc,
+        })
+    );
+};
+
+export const setLoading = (loading) => (dispatch, getState) => {
+    dispatch(
+        setTextureState({
+            loading: loading,
         })
     );
 };

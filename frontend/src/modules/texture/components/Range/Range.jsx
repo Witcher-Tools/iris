@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, {useEffect, useRef} from "react";
 
-import { selectTexture, setTextures } from "@/redux/action/iris.js";
-import { useDispatch, useSelector } from "react-redux";
+import {selectTexture, setTextures} from "@/redux/action/iris.js";
+import {useDispatch, useSelector} from "react-redux";
 
 import "./Range.css";
 
@@ -12,8 +12,8 @@ const TextureRangeSelector = () => {
 
     const dispatch = useDispatch();
 
-    const textures = useSelector((state) => state.mainState.textures);
-    const selectedRangeIndex = useSelector((state) => state.mainState.selectedTexture);
+    const textures = useSelector((state) => state.textureState.textures);
+    const selectedRangeIndex = useSelector((state) => state.textureState.selectedTexture);
 
     useEffect(() => {
         console.log("textures", textures);

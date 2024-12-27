@@ -1,6 +1,12 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 
-import {addTexture, setImportFolder, setImportTextureMap} from "@/redux/action/iris.js";
+import {
+    addTexture,
+    setImportFolder,
+    setImportTextureMap,
+    setImportTextureMapSrc,
+    setLoading
+} from "@/redux/action/iris.js";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -16,7 +22,7 @@ import Modal from "@shared/components/ui/Modal/Modal.jsx";
 import {
     Import,
     SelectImportFolder,
-    SelectTextureMap
+    SelectImportTextureMap
 } from "@bindings/changeme/internal/texture/service/importer/importer.js";
 import {trimString} from "@/utils/string.js";
 import {ImportOptions} from "@bindings/changeme/internal/texture/service/importer/index.js";
@@ -27,11 +33,8 @@ function Iris() {
 
     const {
         isVisible,
-        modalStyle,
-        modalTitle,
-        modalContent,
-        openModal,
-        closeModal,
+        modalStyle, modalTitle, modalContent,
+        openModal, closeModal
     } = useModal();
 
     const dispatch = useDispatch();
@@ -42,50 +45,34 @@ function Iris() {
     const scale = useRef(null);
     const canvasRef = useRef(null);
 
-    const [imageSrc, setImageSrc] = useState(null);
-
-    const textures = useSelector((state) => state.mainState.textures);
-    const selectedTexture = useSelector((state) => state.mainState.selectedTexture);
-
-    const importFolder = useSelector((state) => state.mainState.importFolder);
-    const importTextureMap = useSelector((state) => state.mainState.importTextureMap);
+    const textures = useSelector((state) => state.textureState.textures);
+    const selectedTexture = useSelector((state) => state.textureState.selectedTexture);
+    const importFolder = useSelector((state) => state.textureState.importFolder);
+    const importTextureMap = useSelector((state) => state.textureState.importTextureMap);
+    const importTextureMapSrc = useSelector((state) => state.textureState.importTextureMapSrc);
+    const loading = useSelector((state) => state.textureState.loading);
 
     const addTextureA = () => {
         const texture = {
-            verticalTexture: verticalTexture.current.value,
-            horizontalTexture: horizontalTexture.current.value,
-            slope: slope.current.value,
-            scale: scale.current.value,
-            start: 0,
-            end: 255,
-            red: Math.floor(Math.random() * 255),
-            green: Math.floor(Math.random() * 255),
-            blue: Math.floor(Math.random() * 255),
+            verticalTexture: parseInt(verticalTexture.current.value),
+            horizontalTexture: parseInt(horizontalTexture.current.value),
+            slope: parseInt(slope.current.value),
+            scale: parseInt(scale.current.value)
         };
 
         dispatch(addTexture(texture));
     };
 
     const doImport = async () => {
-        const Textures = textures.map(el => (
-            new Texture({
-                    verticalTexture: parseInt(el.verticalTexture),
-                    horizontalTexture: parseInt(el.horizontalTexture),
-                    scale: parseInt(el.scale),
-                    slope: parseInt(el.slope),
-                    start: parseInt(el.start),
-                    end: parseInt(el.end),
-                }
-            )
-        ))
-
-        console.log(Textures[0]);
-
+        dispatch(setLoading(true));
         const response = await Import(new ImportOptions({
             ImportFolder: importFolder,
             TextureMap: importTextureMap,
-            Textures: Textures
+            Textures: textures.map(el => (
+                new Texture(el)
+            ))
         }));
+        dispatch(setLoading(false));
 
         if (response.Error !== null) {
             openModal("error", t("main.error"), t(`import.${response.Error.Code}`));
@@ -107,17 +94,16 @@ function Iris() {
     }
 
     const selectImportTextureMap = async () => {
-        const response = await SelectTextureMap();
+        dispatch(setLoading(true));
+        const response = await SelectImportTextureMap();
+        dispatch(setLoading(false));
 
         if (response.Error !== null) {
             openModal("error", t("main.error"), t(`import.${response.Error.Code}`))
             return
         }
 
-        const img = new Image();
-        img.src = `data:image/png;base64,${response.Data.ImportTextureMapBase64}`;
-        setImageSrc(img.src);
-
+        dispatch(setImportTextureMapSrc(`data:image/png;base64,${response.Data.ImportTextureMapBase64}`));
         dispatch(setImportTextureMap(response.Data.ImportTextureMap));
     };
 
@@ -125,12 +111,12 @@ function Iris() {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
 
-        if (imageSrc === null) {
+        if (importTextureMapSrc === null) {
             return;
         }
 
         const img = new Image();
-        img.src = imageSrc;
+        img.src = importTextureMapSrc;
 
         img.onload = () => {
             canvas.width = img.width;
@@ -160,7 +146,7 @@ function Iris() {
 
             ctx.putImageData(imageData, 0, 0);
         };
-    }, [textures, selectedTexture, imageSrc]);
+    }, [textures, selectedTexture, importTextureMapSrc]);
 
     return (
         <>
@@ -202,7 +188,6 @@ function Iris() {
                             />
                             <Button
                                 className={"py-2 text-sm"}
-                                disabled={false}
                                 text={t("main.addTexture")}
                                 onClick={addTextureA}
                             />
@@ -214,6 +199,7 @@ function Iris() {
                                         {t("main.textureMap") + trimString(importTextureMap)}
                                     </span>
                                     <Button
+                                        disabled={loading}
                                         onClick={selectImportTextureMap}
                                         className={"py-2 text-sm"}
                                         text={t("main.selectTextureMap")}
@@ -241,7 +227,7 @@ function Iris() {
                             <Separator className={"my-4"}/>
                             <Button
                                 onClick={doImport}
-                                disabled={imageSrc === null || importFolder === null}
+                                disabled={importTextureMap === null || importFolder === null || loading}
                                 text={t("main.import")}
                             />
                         </div>

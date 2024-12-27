@@ -1,7 +1,8 @@
-export function trimString(string, maxLength = 30) {
-    if (string === null || string === undefined) return "";
+export function trimString(path, n = 2) {
+    if (!path) return '';
 
-    if (string.length <= maxLength) return string;
+    const normalizedPath = path.replace(/\\/g, '/');
+    const parts = normalizedPath.split('/');
 
-    return `...${string.slice(-maxLength)}`;
+    return `.../${parts.slice(-n).join('/')}`;
 }

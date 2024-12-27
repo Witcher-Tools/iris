@@ -1,10 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { combineReducers } from "redux";
+import {configureStore} from "@reduxjs/toolkit";
+import {combineReducers} from "redux";
 
 import reducer from "./reducers/iris.js";
 
 const rootReducer = combineReducers({
-    mainState: reducer,
+    textureState: reducer,
 });
 
 const store = configureStore({

@@ -6,6 +6,8 @@ const initialState = {
 
     importFolder: null,
     importTextureMap: null,
+
+    loading: false
 };
 
 const reducer = (state = initialState, action) => {

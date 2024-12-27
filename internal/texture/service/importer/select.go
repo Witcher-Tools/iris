@@ -39,7 +39,7 @@ func (i *Importer) SelectImportFolder() *response.Response[SelectImportFolderRes
 	}))
 }
 
-func (i *Importer) SelectTextureMap() *response.Response[SelectImportTextureMapResponse] {
+func (i *Importer) SelectImportTextureMap() *response.Response[SelectImportTextureMapResponse] {
 	dialog := application.OpenFileDialogWithOptions(&application.OpenFileDialogOptions{
 		Title: "Select texture map",
 		Filters: []application.FileFilter{

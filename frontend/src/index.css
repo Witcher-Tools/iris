@@ -66,6 +66,10 @@ body {
         }
     }
 
+    &.tab-link-loading {
+        animation: moveBackground 4s linear infinite;
+    }
+
     &:hover {
         top: 10px;
     }
@@ -74,4 +78,16 @@ body {
 .text-gradient {
     background: linear-gradient(to right, var(--gwentButtonTextInitBackground) 0%, var(--gwentButtonTextInitBackgroundEnd) 100%) text;
     -webkit-text-fill-color: transparent;
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position-y: 0;
+    }
+    50% {
+        background-position-y: 100%;
+    }
+    100% {
+        background-position-y: 0;
+    }
 }

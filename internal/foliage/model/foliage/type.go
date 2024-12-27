@@ -17,11 +17,11 @@ type Foliage struct {
 
 func New(x, y, z, scale, pitch, hz float32) *Foliage {
 	return &Foliage{
-		X:     binary.ConvertFloatToRotatedBytes(x),
-		Y:     binary.ConvertFloatToRotatedBytes(y),
-		Z:     binary.ConvertFloatToRotatedBytes(z),
-		Scale: binary.ConvertFloatToRotatedBytes(scale),
-		Pitch: binary.ConvertFloatToRotatedBytes(pitch),
-		HZ:    binary.ConvertFloatToRotatedBytes(hz),
+		X:     binary.ConvertFloatToBytes(x),
+		Y:     binary.ConvertFloatToBytes(y),
+		Z:     binary.ConvertFloatToBytes(z),
+		Scale: binary.ConvertFloatToBytes(scale),
+		Pitch: binary.ConvertFloatToBytes(pitch),
+		HZ:    binary.ConvertFloatToBytes(hz),
 	}
 }

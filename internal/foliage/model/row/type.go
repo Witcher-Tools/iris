@@ -5,7 +5,9 @@ import (
 )
 
 type Row struct {
-	ID     []byte
+	FoliageAsset string
+	FoliageID    []byte
+
 	Length []byte
 	Data   []*foliage.Foliage
 }
