@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import {selectTexture, setTextures} from "@/redux/action/iris.js";
 import {useDispatch, useSelector} from "react-redux";
@@ -6,17 +6,23 @@ import {useDispatch, useSelector} from "react-redux";
 import "./Range.css";
 
 const TOTAL_RANGE = 255;
+const MIN_ZOOM = 1;
+const MAX_ZOOM = 10;
 
 const TextureRangeSelector = () => {
     const rangeBarRef = useRef(null);
+    const gridRef = useRef(null);
 
     const dispatch = useDispatch();
 
     const textures = useSelector((state) => state.textureState.textures);
     const selectedRangeIndex = useSelector((state) => state.textureState.selectedTexture);
 
+    const [zoomLevel, setZoomLevel] = useState(1);
+    const [viewportOffset, setViewportOffset] = useState(0);
+
     useEffect(() => {
-        console.log("textures", textures);
+        console.log(zoomLevel, viewportOffset);
 
         const rangeBar = rangeBarRef.current;
 
@@ -29,7 +35,7 @@ const TextureRangeSelector = () => {
             window.removeEventListener("keydown", handleKeyDown);
             rangeBar.removeEventListener("wheel", handleWheel);
         };
-    }, [selectedRangeIndex, textures]);
+    }, [selectedRangeIndex, textures, zoomLevel, viewportOffset]);
 
     const updateRangeValues = (index, newValue) => {
         const updatedTextures = textures.map((texture, i) => {
@@ -94,9 +100,34 @@ const TextureRangeSelector = () => {
     };
 
     const handleWheel = (e) => {
-        if (selectedRangeIndex === null) return;
-
         e.preventDefault();
+
+        const rangeBar = rangeBarRef.current;
+        if (!rangeBar) return;
+
+        const rect = rangeBar.getBoundingClientRect();
+
+        const cursorY = e.clientY - rect.top;
+        const containerHeight = rect.height;
+
+        if (e.ctrlKey) {
+            const cursorFromBottom = containerHeight - cursorY;
+            const totalZoomedHeight = containerHeight * zoomLevel;
+            const valueAtCursor = ((cursorFromBottom + viewportOffset) / totalZoomedHeight) * TOTAL_RANGE;
+
+            const zoomDelta = e.deltaY > 0 ? 0.9 : 1.1;
+            const newZoomLevel = Math.min(Math.max(zoomLevel * zoomDelta, MIN_ZOOM), MAX_ZOOM);
+
+            const newTotalHeight = containerHeight * newZoomLevel;
+            const newPositionFromBottom = (valueAtCursor / TOTAL_RANGE) * newTotalHeight;
+            const newOffset = newPositionFromBottom - cursorFromBottom;
+
+            setZoomLevel(newZoomLevel);
+            setViewportOffset(Math.max(0, Math.min(newOffset, newTotalHeight - containerHeight)));
+
+            return;
+        }
+        if (selectedRangeIndex === null) return;
 
         const step = e.deltaY < 0 ? 1 : -1;
         const texture = textures[selectedRangeIndex];
@@ -110,18 +141,40 @@ const TextureRangeSelector = () => {
         dispatch(selectTexture(index));
     };
 
+    const renderGridLines = () => {
+        const lines = [];
+        const step = TOTAL_RANGE / 25;
+
+        for (let i = 0; i <= 25; i++) {
+            const value = Math.round(i * step);
+            const position = (value / TOTAL_RANGE) * 100 * zoomLevel;
+
+            lines.push(
+                <div
+                    key={i}
+                    className="grid-tick"
+                    style={{
+                        bottom: `${position}%`,
+                    }}
+                >
+                    <span>{value}</span>
+                </div>
+            );
+        }
+        return lines;
+    };
+
     return (
         <div className="texture-range-container">
             <div className="range-bar" ref={rangeBarRef}>
-                <div className="grid-lines">
-                    {Array.from({length: 26}, (_, i) => (
-                        <div
-                            key={i}
-                            className="grid-tick"
-                            style={{bottom: `${(i / 25) * 100}%`}}>
-                            <span>{Math.round((i / 25) * TOTAL_RANGE)}</span>
-                        </div>
-                    ))}
+                <div
+                    className="grid-lines"
+                    ref={gridRef}
+                    style={{
+                        transform: `translateY(${viewportOffset}px)`
+                    }}
+                >
+                    {renderGridLines()}
                 </div>
                 {textures.map((texture, index) => (
                     <div
@@ -131,8 +184,8 @@ const TextureRangeSelector = () => {
                             index === selectedRangeIndex ? "selected-range" : ""
                         }`}
                         style={{
-                            bottom: `${(texture.start / TOTAL_RANGE) * 100}%`,
-                            height: `${((texture.end - texture.start + 1) / TOTAL_RANGE) * 100}%`,
+                            bottom: `${(texture.start / TOTAL_RANGE) * 100 * zoomLevel + zoomOffset.y * 100}%`,
+                            height: `${((texture.end - texture.start + 1) / TOTAL_RANGE) * 100 * zoomLevel}%`,
                         }}>
                         {/*<span className="texture-label">{texture.verticalTexture}/{texture.horizontalTexture}</span>*/}
                         {index !== textures.length - 1 && (
