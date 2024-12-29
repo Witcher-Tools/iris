@@ -37,11 +37,16 @@ const TextureRangeSelector = () => {
             const dragDelta = e.clientY - dragStartY;
             setDragStartY(e.clientY);
 
-            const rangeBarHeight = rangeBar.offsetHeight;
-            const totalZoomedHeight = rangeBarHeight * zoomLevel;
+            const rangeBar = rangeBarRef.current;
+            const rect = rangeBar.getBoundingClientRect();
+
+            const cursorY = e.clientY - rect.top - 24;
+            const containerHeight = rect.height - 48;
+
+            const totalZoomedHeight = containerHeight * zoomLevel;
             const newOffset = Math.max(
                 0,
-                Math.min(viewportOffset + dragDelta, totalZoomedHeight - rangeBarHeight)
+                Math.min(viewportOffset + dragDelta, totalZoomedHeight - containerHeight)
             );
 
             setViewportOffset(newOffset);
