@@ -21,28 +21,57 @@ const TextureRangeSelector = () => {
     const [zoomLevel, setZoomLevel] = useState(1);
     const [viewportOffset, setViewportOffset] = useState(0);
 
+    const [isDragging, setIsDragging] = useState(false);
+    const [dragStartY, setDragStartY] = useState(0);
+
     useEffect(() => {
-        console.log(zoomLevel, viewportOffset);
+        console.log(textures);
 
         const rangeBar = rangeBarRef.current;
 
         if (!rangeBar) return;
 
+        const handleMouseMove = (e) => {
+            if (!isDragging) return;
+
+            const dragDelta = e.clientY - dragStartY;
+            setDragStartY(e.clientY);
+
+            const rangeBarHeight = rangeBar.offsetHeight;
+            const totalZoomedHeight = rangeBarHeight * zoomLevel;
+            const newOffset = Math.max(
+                0,
+                Math.min(viewportOffset + dragDelta, totalZoomedHeight - rangeBarHeight)
+            );
+
+            setViewportOffset(newOffset);
+        };
+
+        const handleMouseUp = () => {
+            setIsDragging(false);
+        };
+
         window.addEventListener("keydown", handleKeyDown);
         rangeBar.addEventListener("wheel", handleWheel);
+
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseup", handleMouseUp);
 
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
             rangeBar.removeEventListener("wheel", handleWheel);
+
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseup", handleMouseUp);
         };
-    }, [selectedRangeIndex, textures, zoomLevel, viewportOffset]);
+    }, [selectedRangeIndex, textures, zoomLevel, viewportOffset, dragStartY, isDragging]);
 
     const updateRangeValues = (index, newValue) => {
         const updatedTextures = textures.map((texture, i) => {
             if (i === index) {
                 const maxRight =
                     i < textures.length - 1 ? textures[i + 1].end - 1 : TOTAL_RANGE;
-                const minLeft = i > 0 ? texture.start : 1;
+                const minLeft = i > 0 ? texture.start : 0;
                 return {
                     ...texture,
                     end: Math.max(Math.min(newValue, maxRight), minLeft),
@@ -54,7 +83,7 @@ const TextureRangeSelector = () => {
 
                 return {
                     ...texture,
-                    start: Math.max(Math.min(newValue, texture.end), minLeft),
+                    start: Math.max(Math.min(newValue + 1, texture.end), minLeft),
                 };
             }
 
@@ -63,6 +92,14 @@ const TextureRangeSelector = () => {
 
         dispatch(setTextures(updatedTextures));
     };
+
+    const handleMouseDown2 = (e) => {
+        if (e.button === 1) {
+            e.preventDefault();
+            setIsDragging(true);
+            setDragStartY(e.clientY);
+        }
+    }
 
     const handleMouseDown = (e, index) => {
         const rangeBar = rangeBarRef.current;
@@ -107,8 +144,8 @@ const TextureRangeSelector = () => {
 
         const rect = rangeBar.getBoundingClientRect();
 
-        const cursorY = e.clientY - rect.top;
-        const containerHeight = rect.height;
+        const cursorY = e.clientY - rect.top - 24;
+        const containerHeight = rect.height - 48;
 
         if (e.ctrlKey) {
             const cursorFromBottom = containerHeight - cursorY;
@@ -143,21 +180,30 @@ const TextureRangeSelector = () => {
 
     const renderGridLines = () => {
         const lines = [];
-        const step = TOTAL_RANGE / 25;
+        // Render all 256 grid lines (0-255)
 
-        for (let i = 0; i <= 25; i++) {
-            const value = Math.round(i * step);
-            const position = (value / TOTAL_RANGE) * 100 * zoomLevel;
+        const count = 255 / (11 - zoomLevel);
+        const step = Math.round(255 / count);
+
+        for (let i = 0; i <= count; i++) {
+            const position = (i * step / TOTAL_RANGE) * 100 * zoomLevel;
+            const isFirstTick = i === 0;
+            const isLastTick = i === TOTAL_RANGE;
+            const isMajorTick = i % 10 === 0;
+
+            const tickClass = `grid-tick ${isFirstTick ? 'boundary-tick' : ''} 
+                             ${isLastTick ? 'last-tick' : ''} 
+                             ${isMajorTick ? 'major-tick' : ''}`;
 
             lines.push(
                 <div
                     key={i}
-                    className="grid-tick"
+                    className={tickClass}
                     style={{
                         bottom: `${position}%`,
                     }}
                 >
-                    <span>{value}</span>
+                    <span className="tick-label">{i * step}</span>
                 </div>
             );
         }
@@ -165,7 +211,9 @@ const TextureRangeSelector = () => {
     };
 
     return (
-        <div className="texture-range-container">
+        <div className="texture-range-container"
+             onMouseDown={handleMouseDown2}
+        >
             <div className="range-bar" ref={rangeBarRef}>
                 <div
                     className="grid-lines"
@@ -176,25 +224,30 @@ const TextureRangeSelector = () => {
                 >
                     {renderGridLines()}
                 </div>
-                {textures.map((texture, index) => (
-                    <div
-                        onClick={() => selectTextureEvent(index)}
-                        key={texture.start + texture.end}
-                        className={`texture-range ${
-                            index === selectedRangeIndex ? "selected-range" : ""
-                        }`}
-                        style={{
-                            bottom: `${(texture.start / TOTAL_RANGE) * 100 * zoomLevel + zoomOffset.y * 100}%`,
-                            height: `${((texture.end - texture.start + 1) / TOTAL_RANGE) * 100 * zoomLevel}%`,
-                        }}>
-                        {/*<span className="texture-label">{texture.verticalTexture}/{texture.horizontalTexture}</span>*/}
-                        {index !== textures.length - 1 && (
-                            <div
-                                className="handle handle-right"
-                                onMouseDown={(e) => handleMouseDown(e, index)}></div>
-                        )}
-                    </div>
-                ))}
+                {textures.map((texture, index) => {
+                    const bottom = (texture.start / TOTAL_RANGE) * 100 * zoomLevel;
+                    const height = ((texture.end - texture.start + 1) / TOTAL_RANGE) * 100 * zoomLevel;
+
+                    return (
+                        <div
+                            onClick={() => dispatch(selectTexture(index))}
+                            key={`${texture.start}-${texture.end}`}
+                            className={`texture-range ${index === selectedRangeIndex ? "selected-range" : ""}`}
+                            style={{
+                                bottom: `${bottom}%`,
+                                height: `${height}%`,
+                                transform: `translateY(${viewportOffset}px)`
+                            }}
+                        >
+                            {index !== textures.length - 1 && (
+                                <div
+                                    className="handle handle-right"
+                                    onMouseDown={(e) => handleMouseDown(e, index)}
+                                />
+                            )}
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

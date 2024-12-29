@@ -5,13 +5,12 @@
     overflow: hidden;
     position: relative;
 
-    border-image-source: url("images/frame-fa00d6ac.png");
+    border-image-source: url("/images/frame-fa00d6ac.png");
     border-width: 24px;
     border-style: solid;
     border-radius: 0;
 
     border-image-slice: 22;
-    border-image-outset: 0;
     border-image-repeat: round;
 }
 
@@ -24,12 +23,22 @@
 .grid-tick {
     position: absolute;
     width: 100%;
-    border-top: 1px dashed #555;
-    text-align: left;
+    border-bottom: 1px dashed #555;
+    text-align: right;
     font-size: 0.7rem;
     color: #c5b677;
-    transform: translateX(-50%);
+    transform: translate(-50%, 0%);
     left: 24px;
+
+    /*&.boundary-tick {*/
+    /*    transform: translate(-50%);*/
+    /*    border-bottom: 1px dashed #555;*/
+    /*    border-top: none;*/
+
+    /*    span {*/
+    /*        display: none;*/
+    /*    }*/
+    /*}*/
 }
 
 .texture-range {
@@ -83,25 +92,3 @@
     );
     border-radius: 20px;
 }
-
-/*.context-menu {*/
-/*    position: absolute;*/
-/*    background: white;*/
-/*    border: 1px solid #ccc;*/
-/*    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);*/
-/*    z-index: 1000;*/
-/*}*/
-
-/*.context-menu button {*/
-/*    display: block;*/
-/*    width: 100%;*/
-/*    padding: 8px;*/
-/*    background: none;*/
-/*    border: none;*/
-/*    text-align: left;*/
-/*    cursor: pointer;*/
-/*}*/
-
-/*.context-menu button:hover {*/
-/*    background: #f0f0f0;*/
-/*}*/
