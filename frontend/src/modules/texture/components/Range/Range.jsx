@@ -187,13 +187,13 @@ const TextureRangeSelector = () => {
         const lines = [];
         // Render all 256 grid lines (0-255)
 
-        const count = 255 / (11 - zoomLevel);
-        const step = Math.round(255 / count);
+        const count = 256 / (11 - zoomLevel);
+        const step = Math.round(256 / count);
 
         for (let i = 0; i <= count; i++) {
-            const position = (i * step / TOTAL_RANGE) * 100 * zoomLevel;
+            const position = (i * step / 256) * 100 * zoomLevel;
             const isFirstTick = i === 0;
-            const isLastTick = i === TOTAL_RANGE;
+            const isLastTick = i === 2;
             const isMajorTick = i % 10 === 0;
 
             const tickClass = `grid-tick ${isFirstTick ? 'boundary-tick' : ''} 
