@@ -57,7 +57,7 @@ body {
 
     &.tab-link-selected {
         transition: 0.3s ease-in-out;
-        filter: brightness(1.2);
+        filter: brightness(1.5);
         right: 25px;
 
         &:hover {
@@ -82,7 +82,7 @@ body {
 
         &:hover {
             right: 25px;
-            filter: hue-rotate(-300deg) brightness(1.2) grayscale(0.5);
+            filter: hue-rotate(-300deg) brightness(2) grayscale(0.5);
         }
 
         img {

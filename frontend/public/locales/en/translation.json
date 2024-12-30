@@ -12,7 +12,8 @@
         "import": "Import",
         "error": "Error",
         "success": "Success",
-        "successImport": "Textures was imported successfully!"
+        "successImport": "Textures was imported successfully!",
+        "language": "Language"
     },
     "import": {
         "ERROR_OPEN_TEXTURE_MAP": "Failed to open the texture map file.",

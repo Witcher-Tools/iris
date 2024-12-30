@@ -31,7 +31,7 @@
         var(--gwentButtonInitBackgroundEnd)
     );
 
-    input {
+    input, select {
         background: linear-gradient(
             180deg,
             var(--gwentButtonInitBackground),

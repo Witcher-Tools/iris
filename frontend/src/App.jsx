@@ -4,7 +4,7 @@ import Aelirenn from "@/modules/foliage/pages/Aelirenn.jsx";
 import {useSelector} from "react-redux";
 import {useModal} from "@shared/hooks/useModal.js";
 import Modal from "@shared/components/ui/Modal/Modal.jsx";
-import Button from "@shared/components/ui/Button/Button.jsx";
+import Settings from "@shared/windows/Settings/Settings.jsx";
 
 function App() {
     const [activeTab, setActiveTab] = useState(0);
@@ -54,52 +54,48 @@ function App() {
             loading: false,
             onClick: () => setActiveTab(2),
         },
-        {
-            id: 3,
-            icon: "images/monsters-ribbon-d0f23172.jpg",
-            loading: false,
-            position: "bottom",
-            additionalIcon: "images/icon/help.png",
-            style: "fixed",
-            onClick: () =>
-                openModal(
-                    "default",
-                    "Open Link",
-                    <div>
-                        <p>Do you want to open this link in your browser?</p>
-                        <div className="modal-actions">
-                            <div className="flex flex-row gap-2 mt-3">
-                                <Button className={"py-1.5 w-full"} text={"Cancel"} onClick={closeModal}></Button>
-                                <Button
-                                    className={"py-1.5 w-full"}
-                                    onClick={() => {
-                                        window.open("https://example.com");
-                                        closeModal();
-                                    }}
-                                    text={"Confirm"}
-                                >
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-                ),
-        },
+        // {
+        //     id: 3,
+        //     icon: "images/monsters-ribbon-d0f23172.jpg",
+        //     loading: false,
+        //     position: "bottom",
+        //     additionalIcon: "images/icon/help.png",
+        //     style: "fixed",
+        //     onClick: () =>
+        //         openModal(
+        //             "default",
+        //             "Open Link",
+        //             <div>
+        //                 <p>Do you want to open this link in your browser?</p>
+        //                 <div className="modal-actions">
+        //                     <div className="flex flex-row gap-2 mt-3">
+        //                         <Button className={"py-1.5 w-full"} text={"Cancel"} onClick={closeModal}></Button>
+        //                         <Button
+        //                             className={"py-1.5 w-full"}
+        //                             onClick={() => {
+        //                                 Browser.OpenURL("https://w3redkit-community-doc.gitbook.io/witcher-3-redkit-docs/tools/scripts-editor");
+        //                                 closeModal();
+        //                             }}
+        //                             text={"Confirm"}
+        //                         >
+        //                         </Button>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         ),
+        // },
         {
             id: 4,
             icon: "images/monsters-ribbon-d0f23172.jpg",
             loading: false,
+            position: "bottom",
             additionalIcon: "images/icon/settings.png",
             style: "fixed",
             onClick: () =>
                 openModal(
                     "default",
                     "Settings",
-                    <div>
-                        <p>Settings modal content goes here.</p>
-                        <div className="modal-actions">
-                            <button onClick={closeModal}>Close</button>
-                        </div>
-                    </div>
+                    <Settings/>
                 ),
         },
     ];
