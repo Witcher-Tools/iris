@@ -72,9 +72,7 @@ function App() {
                                 <Button
                                     className={"w-full py-1.5"}
                                     onClick={() => {
-                                        Browser.OpenURL(
-                                            "https://w3redkit-community-doc.gitbook.io/witcher-3-redkit-docs/tools/scripts-editor"
-                                        );
+                                        Browser.OpenURL(t("helpLink"));
                                         closeModal();
                                     }}
                                     text={t("main.open")}></Button>
