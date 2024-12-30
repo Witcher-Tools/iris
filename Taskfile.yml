@@ -35,7 +35,7 @@ tasks:
         vars:
           ARCH: '{{.ARCH}}'
     cmds:
-      - go build {{.BUILD_FLAGS}} -o {{.BIN_DIR}}/tes.exe
+      - go build {{.BUILD_FLAGS}} -o {{.BIN_DIR}}/Iris.exe
     vars:
       BUILD_FLAGS: '{{if eq .PRODUCTION "true"}}-tags production -trimpath -ldflags="-w -s -H windowsgui"{{else}}-gcflags=all="-l"{{end}}'
     env:

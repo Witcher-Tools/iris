@@ -1,7 +1,7 @@
 import React from "react";
 
 import PropTypes from "prop-types";
-import {twMerge} from "tailwind-merge";
+import { twMerge } from "tailwind-merge";
 
 import "./Button.css";
 
@@ -11,7 +11,7 @@ const Button = ({ text, onClick, disabled, ...props }) => {
             disabled={disabled}
             onClick={onClick}
             className={twMerge(
-                "gwent-button relative py-3 text-base tracking-wide flex justify-center items-center",
+                "gwent-button text-base relative flex items-center justify-center py-3 tracking-wide",
                 props?.className
             )}>
             <span>{text}</span>

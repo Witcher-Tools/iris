@@ -23,7 +23,7 @@ func New(verticalTexture, horizontalTexture, slope, scale, start, end uint8) *Te
 }
 
 func (t *Texture) ByteValue() (byte, byte) {
-	value := int(t.VerticalTexture*33) + (int(t.Slope-1) * 1024) + (int(t.Scale-1) * 8192) - int(t.VerticalTexture-t.HorizontalTexture)
+	value := (int(t.VerticalTexture) * 33) + (int(t.Slope-1) * 1024) + (int(t.Scale-1) * 8192) - int(t.VerticalTexture-t.HorizontalTexture)
 
 	if value > 65535 {
 		value = 65535

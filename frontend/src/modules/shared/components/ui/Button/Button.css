@@ -74,7 +74,7 @@
         ::after,
         ::before {
             filter: grayscale(0) brightness(1.1) sepia(1) hue-rotate(105deg) saturate(6)
-            brightness(1.4);
+                brightness(1.4);
         }
     }
 
@@ -95,7 +95,8 @@
                 to right,
                 var(--gwentButtonTextInitBackground) 0%,
                 var(--gwentButtonTextInitBackgroundEnd) 100%
-            ) text;
+            )
+            text;
         -webkit-text-fill-color: transparent;
 
         transition:

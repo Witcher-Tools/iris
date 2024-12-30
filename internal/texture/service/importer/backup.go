@@ -31,6 +31,10 @@ func (i *Importer) doBackup(options *ImportOptions) error {
 		return fmt.Errorf("failed to get app folder")
 	}
 
+	if isEmpty, err := folders.IsEmpty(backupFolder); err == nil && !isEmpty {
+		return nil
+	}
+
 	err = folders.CopyFolder(options.ImportFolder, backupFolder)
 
 	return nil

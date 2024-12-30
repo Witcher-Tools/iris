@@ -41,12 +41,15 @@
         .modal-content {
             padding: 1rem 1.9rem 1.7rem;
 
-            background-image:
-                    url("/images/modal/desktop-card-details-bottom-2819f061.jpg"),
-                    url("/images/modal/desktop-card-details-center-ff10cbc6.jpg");
-            background-size: 100%, 100% 90%;
+            background-image: url("/images/modal/desktop-card-details-bottom-2819f061.jpg"),
+                url("/images/modal/desktop-card-details-center-ff10cbc6.jpg");
+            background-size:
+                100%,
+                100% 90%;
             background-repeat: no-repeat, repeat-y;
-            background-position: center 101%, center top;
+            background-position:
+                center 101%,
+                center top;
         }
     }
 }

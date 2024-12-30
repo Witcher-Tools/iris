@@ -18,9 +18,8 @@ import (
 
 var (
 	resolutionStartAddress = map[int]int{
-		256:  0x0002026B,
-		512:  0x000802A5,
-		1024: 0x00100000,
+		256: 0x0002026B,
+		512: 0x000802A5,
 	}
 )
 
@@ -93,10 +92,10 @@ func (i *Importer) Import(options *ImportOptions) *response.Response[bool] {
 		return response.AsError[bool]("ERROR_COLORMAP_RESOLUTION_MISMATCH")
 	}
 
-	// err = i.doBackup(options)
-	// if err != nil {
-	// 	return response.AsError[bool]("ERROR_BACKUP_FAILED")
-	// }
+	err = i.doBackup(options)
+	if err != nil {
+		return response.AsError[bool]("ERROR_BACKUP_FAILED")
+	}
 
 	tiles, err := os.ReadDir(options.ImportFolder)
 	if err != nil {
@@ -124,7 +123,7 @@ func (i *Importer) Import(options *ImportOptions) *response.Response[bool] {
 		tilePath := filepath.Join(options.ImportFolder, tile.Name())
 		wg.Add(1)
 
-		go func(colorImage image.Image) {
+		go func() {
 			defer wg.Done()
 
 			tileTextureBytes := make([]byte, tileResolution*tileResolution*2)
@@ -134,10 +133,14 @@ func (i *Importer) Import(options *ImportOptions) *response.Response[bool] {
 
 			for x := 0; x < tileResolution; x++ {
 				for y := 0; y < tileResolution; y++ {
-					colorMapX := ((tileY * tileResolution) + x) * colorImage.Bounds().Max.X / mapGridResolution
-					colorMapY := ((tileX * tileResolution) + y) * colorImage.Bounds().Max.Y / mapGridResolution
-					c := colorImage.At(colorMapX, colorMapY)
+					colorMapX := ((tileY * tileResolution) + x) * textureMap.Bounds().Max.X / mapGridResolution
+					colorMapY := ((tileX * tileResolution) + y) * textureMap.Bounds().Max.Y / mapGridResolution
+					c := textureMap.At(colorMapX, colorMapY)
 					grey := color.GrayModel.Convert(c).(color.Gray).Y
+
+					if grey == 0 {
+						continue
+					}
 
 					var foundTexture *texture.Texture
 					for i := range options.Textures {
@@ -173,7 +176,7 @@ func (i *Importer) Import(options *ImportOptions) *response.Response[bool] {
 				}
 				return
 			}
-		}(textureMap)
+		}()
 	}
 
 	wg.Wait()
@@ -181,10 +184,6 @@ func (i *Importer) Import(options *ImportOptions) *response.Response[bool] {
 
 	if err := <-errChan; err != nil {
 		return response.AsError[bool]("ERROR_WRITE_TILE")
-	}
-
-	for err := range errChan {
-		fmt.Println("Error:", err)
 	}
 
 	return response.New(response.WithData(true))

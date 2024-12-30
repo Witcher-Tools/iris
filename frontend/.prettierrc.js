@@ -6,7 +6,7 @@ export default {
     bracketSameLine: true,
     printWidth: 90,
 
-    plugins: ["@trivago/prettier-plugin-sort-imports"],
+    plugins: ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
 
     importOrder: [
         "^(react/(.*)$)|^(react$)",

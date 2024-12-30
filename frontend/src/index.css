@@ -89,7 +89,7 @@ body {
             width: 3rem;
             height: 3rem;
             opacity: 0.4;
-            mask-image: url("images/clean-gray-paper.png");
+            mask-image: url("/images/clean-gray-paper.png");
         }
     }
 
@@ -99,7 +99,12 @@ body {
 }
 
 .text-gradient {
-    background: linear-gradient(to right, var(--gwentButtonTextInitBackground) 0%, var(--gwentButtonTextInitBackgroundEnd) 100%) text;
+    background: linear-gradient(
+            to right,
+            var(--gwentButtonTextInitBackground) 0%,
+            var(--gwentButtonTextInitBackgroundEnd) 100%
+        )
+        text;
     -webkit-text-fill-color: transparent;
 }
 

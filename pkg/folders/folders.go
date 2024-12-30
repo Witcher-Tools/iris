@@ -102,3 +102,17 @@ func CopyFile(src, dst string) error {
 
 	return nil
 }
+
+func IsEmpty(path string) (bool, error) {
+	folder, err := os.Open(path)
+	if err != nil {
+		return false, err
+	}
+	defer folder.Close()
+
+	_, err = folder.Readdirnames(1)
+	if err == io.EOF {
+		return true, nil
+	}
+	return false, err
+}

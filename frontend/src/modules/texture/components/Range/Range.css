@@ -92,3 +92,19 @@
     );
     border-radius: 20px;
 }
+
+@keyframes blink {
+    0% {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    50% {
+        background-color: rgba(192, 154, 77, 0.6);
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0);
+    }
+}
+
+.highlighted-range {
+    animation: blink 1s infinite;
+}

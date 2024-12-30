@@ -6,37 +6,35 @@ import {
     setImportTextureMap,
     setImportTextureMapSrc,
     setLoading,
-    setTextures
-} from "@/redux/action/iris.js";
+    setTextures,
+} from "@/redux/action/texture.js";
+import {trimString} from "@/utils/string.js";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
+
+import {Texture as TextureModel} from "@bindings/changeme/internal/texture/model/texture/index.js";
+import {
+    Import,
+    SelectImportFolder,
+    SelectImportTextureMap,
+} from "@bindings/changeme/internal/texture/service/importer/importer.js";
+import {ImportOptions} from "@bindings/changeme/internal/texture/service/importer/index.js";
 
 import Button from "@shared/components/ui/Button/Button.jsx";
 import Card from "@shared/components/ui/Card/Card.jsx";
 import Input from "@shared/components/ui/Input/Input.jsx";
+import Modal from "@shared/components/ui/Modal/Modal.jsx";
 import Separator from "@shared/components/ui/Separator/Separator.jsx";
+import {useModal} from "@shared/hooks/useModal.js";
 
 import TextureRangeSelector from "../components/Range/Range.jsx";
-import "./Iris.css";
-import {useModal} from "@shared/hooks/useModal.js";
-import Modal from "@shared/components/ui/Modal/Modal.jsx";
-import {
-    Import,
-    SelectImportFolder,
-    SelectImportTextureMap
-} from "@bindings/changeme/internal/texture/service/importer/importer.js";
-import {trimString} from "@/utils/string.js";
-import {ImportOptions} from "@bindings/changeme/internal/texture/service/importer/index.js";
-import {Texture} from "@bindings/changeme/internal/texture/model/texture/index.js";
+import "./Texture.css";
 
-function Iris() {
-    const {t} = useTranslation();
+function Texture() {
+    const { t } = useTranslation();
 
-    const {
-        isVisible,
-        modalStyle, modalTitle, modalContent,
-        openModal, closeModal
-    } = useModal();
+    const { isVisible, modalStyle, modalTitle, modalContent, openModal, closeModal } =
+        useModal();
 
     const dispatch = useDispatch();
 
@@ -46,7 +44,9 @@ function Iris() {
     const selectedTexture = useSelector((state) => state.textureState.selectedTexture);
     const importFolder = useSelector((state) => state.textureState.importFolder);
     const importTextureMap = useSelector((state) => state.textureState.importTextureMap);
-    const importTextureMapSrc = useSelector((state) => state.textureState.importTextureMapSrc);
+    const importTextureMapSrc = useSelector(
+        (state) => state.textureState.importTextureMapSrc
+    );
     const loading = useSelector((state) => state.textureState.loading);
 
     const addTextureA = () => {
@@ -54,7 +54,7 @@ function Iris() {
             verticalTexture: 1,
             horizontalTexture: 1,
             slope: 1,
-            scale: 1
+            scale: 1,
         };
 
         dispatch(addTexture(texture));
@@ -62,33 +62,41 @@ function Iris() {
 
     const doImport = async () => {
         dispatch(setLoading(true));
-        const response = await Import(new ImportOptions({
-            ImportFolder: importFolder,
-            TextureMap: importTextureMap,
-            Textures: textures.map(el => (
-                new Texture(el)
-            ))
-        }));
+        const response = await Import(
+            new ImportOptions({
+                ImportFolder: importFolder,
+                TextureMap: importTextureMap,
+                Textures: textures.map((el) => new TextureModel(el)),
+            })
+        );
         dispatch(setLoading(false));
 
         if (response.Error !== null) {
-            openModal("error", t("main.error"), t(`import.${response.Error.Code}`));
-            return
+            openModal(
+                "error",
+                t("main.error"),
+                t(`texture.errors.${response.Error.Code}`)
+            );
+            return;
         }
 
-        openModal("success", t("main.success"), t("main.successImport"));
-    }
+        openModal("success", t("main.success"), t("texture.successImport"));
+    };
 
     const selectImportFolder = async () => {
         const response = await SelectImportFolder();
 
         if (response.Error !== null) {
-            openModal("error", t("main.error"), t(`import.${response.Error.Code}`));
-            return
+            openModal(
+                "error",
+                t("main.error"),
+                t(`texture.errors.${response.Error.Code}`)
+            );
+            return;
         }
 
         dispatch(setImportFolder(response.Data.ImportFolder));
-    }
+    };
 
     const selectImportTextureMap = async () => {
         dispatch(setLoading(true));
@@ -96,11 +104,19 @@ function Iris() {
         dispatch(setLoading(false));
 
         if (response.Error !== null) {
-            openModal("error", t("main.error"), t(`import.${response.Error.Code}`))
-            return
+            openModal(
+                "error",
+                t("main.error"),
+                t(`texture.errors.${response.Error.Code}`)
+            );
+            return;
         }
 
-        dispatch(setImportTextureMapSrc(`data:image/png;base64,${response.Data.ImportTextureMapBase64}`));
+        dispatch(
+            setImportTextureMapSrc(
+                `data:image/png;base64,${response.Data.ImportTextureMapBase64}`
+            )
+        );
         dispatch(setImportTextureMap(response.Data.ImportTextureMap));
     };
 
@@ -161,97 +177,112 @@ function Iris() {
 
     return (
         <>
-            <div className="basis-4/12 2xl:basis-3/12 h-full relative z-2 ml-24">
+            <div className="z-2 relative ml-24 h-full basis-4/12 2xl:basis-3/12">
                 <Card>
-                    <div className="flex flex-col content-between h-full justify-between">
+                    <div className="flex h-full flex-col content-between justify-between">
                         <div className="flex flex-col gap-4">
                             <Input
-                                label={t("main.verticalTexture")}
+                                label={t("texture.verticalTexture")}
                                 type="number"
                                 min="1"
                                 max="32"
                                 className={"px-4 py-3"}
-                                value={textures[selectedTexture]?.verticalTexture || ''}
-                                onChange={(e) => handleInputChange("verticalTexture", e.target.value)}
+                                value={textures[selectedTexture]?.verticalTexture || ""}
+                                onChange={(e) =>
+                                    handleInputChange("verticalTexture", e.target.value)
+                                }
                             />
                             <Input
-                                label={t("main.horizontalTexture")}
+                                label={t("texture.horizontalTexture")}
                                 type="number"
                                 min="1"
                                 max="32"
                                 className={"px-4 py-3"}
-                                value={textures[selectedTexture]?.horizontalTexture || ''}
-                                onChange={(e) => handleInputChange("horizontalTexture", e.target.value)}
+                                value={textures[selectedTexture]?.horizontalTexture || ""}
+                                onChange={(e) =>
+                                    handleInputChange("horizontalTexture", e.target.value)
+                                }
                             />
                             <Input
-                                label={t("main.slope")}
+                                label={t("texture.slope")}
                                 type="number"
                                 min="1"
                                 max="8"
                                 className={"px-4 py-3"}
-                                value={textures[selectedTexture]?.slope || ''}
-                                onChange={(e) => handleInputChange("slope", e.target.value)}
+                                value={textures[selectedTexture]?.slope || ""}
+                                onChange={(e) =>
+                                    handleInputChange("slope", e.target.value)
+                                }
                             />
                             <Input
-                                label={t("main.scale")}
+                                label={t("texture.scale")}
                                 type="number"
                                 min="1"
                                 max="8"
                                 className={"px-4 py-3"}
-                                value={textures[selectedTexture]?.scale || ''}
-                                onChange={(e) => handleInputChange("scale", e.target.value)}
+                                value={textures[selectedTexture]?.scale || ""}
+                                onChange={(e) =>
+                                    handleInputChange("scale", e.target.value)
+                                }
                             />
+                            <Separator />
                             <Button
                                 className={"py-2 text-sm"}
-                                text={t("main.addTexture")}
+                                text={t("texture.addTexture")}
                                 onClick={addTextureA}
                             />
                         </div>
                         <div className="flex flex-col">
                             <div className="flex flex-col gap-4">
                                 <div className="flex flex-col">
-                                    <span className={"text-sm text-gradient"}>
-                                        {t("main.textureMap") + trimString(importTextureMap)}
+                                    <span className={"text-gradient text-sm"}>
+                                        {t("texture.textureMap") +
+                                            trimString(importTextureMap)}
                                     </span>
                                     <Button
                                         disabled={loading}
                                         onClick={selectImportTextureMap}
                                         className={"py-2 text-sm"}
-                                        text={t("main.selectTextureMap")}
+                                        text={t("texture.selectTextureMap")}
                                     />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className={"text-sm text-gradient"}>
-                                        {t("main.tilesFolder") + trimString(importFolder)}
+                                    <span className={"text-gradient text-sm"}>
+                                        {t("texture.tilesFolder") +
+                                            trimString(importFolder)}
                                     </span>
                                     <Button
                                         onClick={selectImportFolder}
                                         className={"py-2 text-sm"}
-                                        text={t("main.selectTilesFolder")}
+                                        text={t("texture.selectTilesFolder")}
                                     />
                                     <Modal
                                         isVisible={isVisible}
                                         onClose={closeModal}
                                         title={modalTitle}
-                                        style={modalStyle}
-                                    >
+                                        style={modalStyle}>
                                         <p>{modalContent}</p>
                                     </Modal>
                                 </div>
                             </div>
-                            <Separator className={"my-4"}/>
+                            <Separator className={"my-4"} />
                             <Button
                                 onClick={doImport}
-                                disabled={importTextureMap === null || importFolder === null || loading}
+                                disabled={
+                                    importTextureMap === null ||
+                                    importFolder === null ||
+                                    loading ||
+                                    textures.length === 0
+                                }
                                 text={t("main.import")}
                             />
                         </div>
                     </div>
                 </Card>
             </div>
-            <div className="basis-8/12 2xl:basis-9/12 2xl:mr-24 flex justify-center">
+            <div className="flex basis-8/12 justify-center 2xl:mr-24 2xl:basis-9/12">
                 <div className="gwent-map">
-                    <TextureRangeSelector/>
+                    <TextureRangeSelector />
                     <div className={"map-container"}>
                         <canvas className={"map-canvas"} ref={canvasRef}></canvas>
                     </div>
@@ -261,4 +292,4 @@ function Iris() {
     );
 }
 
-export default Iris;
+export default Texture;

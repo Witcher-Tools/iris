@@ -1,2 +1,1 @@
-export const useSetting = () => {
-}
+export const useSetting = () => {};

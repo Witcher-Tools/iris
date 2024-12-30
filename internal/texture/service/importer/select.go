@@ -29,7 +29,6 @@ func (i *Importer) SelectImportFolder() *response.Response[SelectImportFolderRes
 	})
 
 	folder, err := dialog.PromptForSingleSelection()
-
 	if err != nil {
 		return response.AsError[SelectImportFolderResponse]("ERROR_OPEN_FOLDER")
 	}
@@ -56,6 +55,7 @@ func (i *Importer) SelectImportTextureMap() *response.Response[SelectImportTextu
 	}
 
 	file, err := os.Open(imagePath)
+	defer file.Close()
 	if err != nil {
 		return response.AsError[SelectImportTextureMapResponse]("ERROR_OPEN_TEXTURE_MAP")
 	}

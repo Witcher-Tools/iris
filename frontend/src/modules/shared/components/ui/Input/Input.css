@@ -19,6 +19,12 @@
             )
             text;
         -webkit-text-fill-color: transparent;
+
+        &.label-dark {
+            background: unset;
+            color: black;
+            -webkit-text-fill-color: unset;
+        }
     }
 }
 
@@ -31,7 +37,8 @@
         var(--gwentButtonInitBackgroundEnd)
     );
 
-    input, select {
+    input,
+    select {
         background: linear-gradient(
             180deg,
             var(--gwentButtonInitBackground),
@@ -42,10 +49,13 @@
         border: none;
         color: white;
         z-index: 10;
+        background-color: #2c241e;
 
         &:focus {
             outline: none;
         }
+
+
     }
 
     &::before,
