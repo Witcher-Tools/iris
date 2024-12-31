@@ -28,8 +28,6 @@ const TextureRangeSelector = () => {
     const [dragStartY, setDragStartY] = useState(0);
 
     useEffect(() => {
-        console.log(textures);
-
         const rangeBar = rangeBarRef.current;
 
         if (!rangeBar) return;
