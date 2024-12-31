@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 
+import Cutter from "@/modules/cutter/windows/Cutter.jsx";
 import Foliage from "@/modules/foliage/windows/Foliage.jsx";
 import Texture from "@/modules/texture/windows/Texture.jsx";
 import {Browser} from "@wailsio/runtime";
@@ -10,7 +11,6 @@ import Button from "@shared/components/ui/Button/Button.jsx";
 import Modal from "@shared/components/ui/Modal/Modal.jsx";
 import {useModal} from "@shared/hooks/useModal.js";
 import Settings from "@shared/windows/Settings/Settings.jsx";
-import Cutter from "@/modules/cutter/windows/Cutter.jsx";
 
 function App() {
     const [activeTab, setActiveTab] = useState(0);

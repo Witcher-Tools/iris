@@ -26,7 +26,7 @@ func (i *Importer) doBackup(options *ImportOptions) error {
 		return fmt.Errorf("could not determine mod name from path: %s", options.ImportFolder)
 	}
 
-	backupFolder, err := folders.GetAppFolder(filepath.Join(mod, level))
+	backupFolder, err := folders.GetAppFolder(filepath.Join("backups", mod, level))
 	if err != nil {
 		return fmt.Errorf("failed to get app folder")
 	}

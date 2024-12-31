@@ -1,4 +1,4 @@
-import {UPDATE_TEXTURES} from "../types/texture.js";
+import { UPDATE_TEXTURES } from "../types/texture.js";
 
 const initialState = {
     textures: [],

@@ -10,7 +10,8 @@
         "language": "Language",
         "settings": "Settings",
         "openLink": "Open link",
-        "doYouWantToOpenLink": "Do you want to open the link in browser?"
+        "doYouWantToOpenLink": "Do you want to open the link in browser?",
+        "save": "Save"
     },
     "texture": {
         "verticalTexture": "Vertical texture",
@@ -23,6 +24,9 @@
         "textureMap": "Texture map: ",
         "tilesFolder": "Tiles folder: ",
         "successImport": "Textures was imported successfully!",
+        "savePreset": "Save preset",
+        "presetName": "Preset name",
+        "successPresetSave": "Preset was saved successfully!",
 
         "errors": {
             "ERROR_OPEN_TEXTURE_MAP": "Failed to open the texture map file.",
@@ -34,8 +38,14 @@
             "ERROR_UNSUPPORTED_TILE_RESOLUTION": "The tile resolution is not supported.",
             "ERROR_COLORMAP_RESOLUTION_MISMATCH": "The colormap resolution does not match the expected resolution.",
             "ERROR_BACKUP_FAILED": "Failed to create a backup of the tiles.",
-            "ERROR_OPEN_FOLDER": "Failed to open the folder."
-        }
+            "ERROR_OPEN_FOLDER": "Failed to open the folder.",
+            "ERROR_OPEN_PRESET": "Failed to open the preset.",
+            "ERROR_READ_PRESET": "Failed to read the preset.",
+            "ERROR_GET_PRESET_FOLDER": "Failed to locate the preset folder.",
+            "ERROR_MARSHAL_PRESET": "Failed to process the preset data.",
+            "ERROR_WRITE_PRESET": "Failed to save the preset."
+        },
+        "loadPreset": "texture.loadPreset"
     },
     "cutter": {
         "description": "A utility for working with tiles designed to slice maps and rename tiles into a format supported by RedKit. <br/><br/>In development."

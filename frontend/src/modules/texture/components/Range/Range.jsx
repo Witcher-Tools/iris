@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 
-import {deleteTexture, insertTexture, selectTexture, setTextures} from "@/redux/action/texture.js";
+import {deleteTexture, insertTexture, selectTexture, setTextures,} from "@/redux/action/texture.js";
 import {useDispatch, useSelector} from "react-redux";
 
 import "./Range.css";
@@ -17,7 +17,9 @@ const TextureRangeSelector = () => {
 
     const textures = useSelector((state) => state.textureState.textures);
     const selectedRangeIndex = useSelector((state) => state.textureState.selectedTexture);
-    const highlightedTexture = useSelector((state) => state.textureState.highlightedTexture);
+    const highlightedTexture = useSelector(
+        (state) => state.textureState.highlightedTexture
+    );
 
     const [zoomLevel, setZoomLevel] = useState(1);
     const [viewportOffset, setViewportOffset] = useState(0);
@@ -114,13 +116,13 @@ const TextureRangeSelector = () => {
         const onMouseMove = (moveEvent) => {
             const rect = rangeBar.getBoundingClientRect();
 
-            const cursorFromBottom = (rect.bottom - 24) - moveEvent.clientY;
+            const cursorFromBottom = rect.bottom - 24 - moveEvent.clientY;
 
             const adjustedCursorFromBottom = cursorFromBottom + viewportOffset;
 
             const totalZoomedHeight = containerHeight * zoomLevel;
 
-            const percentage = (adjustedCursorFromBottom / totalZoomedHeight);
+            const percentage = adjustedCursorFromBottom / totalZoomedHeight;
             const value = Math.round(percentage * TOTAL_RANGE);
 
             const clampedValue = Math.max(0, Math.min(TOTAL_RANGE, value));
@@ -136,7 +138,6 @@ const TextureRangeSelector = () => {
         document.addEventListener("mousemove", onMouseMove);
         document.addEventListener("mouseup", onMouseUp);
     };
-
 
     const handleKeyDown = (e) => {
         if (selectedRangeIndex === null) return;
@@ -232,9 +233,6 @@ const TextureRangeSelector = () => {
         return lines;
     };
 
-    useEffect(() => {
-    }, [highlightedTexture]);
-
     return (
         <div className="texture-range-container" onMouseDown={handleMouseDown2}>
             <div className="range-bar" ref={rangeBarRef}>
@@ -255,7 +253,7 @@ const TextureRangeSelector = () => {
                         <div
                             onClick={() => dispatch(selectTexture(index))}
                             key={`${texture.start}`}
-                            className={`texture-range ${index === selectedRangeIndex ? "selected-range " : ""}${index === highlightedTexture ? "highlighted-range" : ""}`}
+                            className={`texture-range ${index === selectedRangeIndex ? "selected-range" : ""}${index === highlightedTexture ? "highlighted-range" : ""}`}
                             style={{
                                 bottom: `${bottom}%`,
                                 height: `${height}%`,

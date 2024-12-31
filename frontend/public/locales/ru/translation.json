@@ -10,7 +10,8 @@
         "language": "Язык",
         "settings": "Настройки",
         "openLink": "Открыть ссылку",
-        "doYouWantToOpenLink": "Вы хотите открыть ссылку в браузере?"
+        "doYouWantToOpenLink": "Вы хотите открыть ссылку в браузере?",
+        "save": "Сохранить"
     },
     "texture": {
         "verticalTexture": "Вертикальная текстура",
@@ -23,6 +24,9 @@
         "textureMap": "Текстурная карта: ",
         "tilesFolder": "Папка с тайлами: ",
         "successImport": "Текстуры успешно импортированы!",
+        "savePreset": "Сохранить пресет",
+        "presetName": "Название пресета",
+        "successPresetSave": "Пресет успешно сохранен!",
 
         "errors": {
             "ERROR_OPEN_TEXTURE_MAP": "Не удалось открыть файл текстурной карты.",
@@ -34,8 +38,14 @@
             "ERROR_UNSUPPORTED_TILE_RESOLUTION": "Разрешение тайлов не поддерживается.",
             "ERROR_COLORMAP_RESOLUTION_MISMATCH": "Разрешение текстурной карты не соответствует ожидаемому.",
             "ERROR_BACKUP_FAILED": "Не удалось создать резервную копию тайлов.",
-            "ERROR_OPEN_FOLDER": "Не удалось открыть папку."
-        }
+            "ERROR_OPEN_FOLDER": "Не удалось открыть папку.",
+            "ERROR_OPEN_PRESET": "Не удалось открыть пресет.",
+            "ERROR_READ_PRESET": "Не удалось прочитать пресет.",
+            "ERROR_GET_PRESET_FOLDER": "Не удалось найти папку с пресетами.",
+            "ERROR_MARSHAL_PRESET": "Не удалось обработать данные пресета.",
+            "ERROR_WRITE_PRESET": "Не удалось сохранить пресет."
+        },
+        "loadPreset": "texture.loadPreset"
     },
     "cutter": {
         "description": "Утилита для работы с тайлами предназначена для нарезки карт и переименования тайлов в формат, который поддерживает RedKit для импорта. <br/><br/>В процессе разработки."

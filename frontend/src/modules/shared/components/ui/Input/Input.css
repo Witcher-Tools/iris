@@ -54,8 +54,6 @@
         &:focus {
             outline: none;
         }
-
-
     }
 
     &::before,

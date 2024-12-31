@@ -1,5 +1,5 @@
-import {configureStore} from "@reduxjs/toolkit";
-import {combineReducers} from "redux";
+import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
 
 import reducer from "./reducers/texture.js";
 

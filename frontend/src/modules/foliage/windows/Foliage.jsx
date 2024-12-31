@@ -1,8 +1,9 @@
 import React from "react";
 
+import { Trans } from "react-i18next";
+
 import Card from "@shared/components/ui/Card/Card.jsx";
 import Paragraph from "@shared/components/ui/Paragraph/Paragraph.jsx";
-import {Trans} from "react-i18next";
 
 function Foliage() {
     return (
@@ -10,7 +11,10 @@ function Foliage() {
             <div className="relative z-10 ml-24 h-full basis-4/12 2xl:basis-3/12">
                 <Card>
                     <Paragraph className={"italic"}>
-                        <Trans i18nKey={"foliage.description"} components={{ br: <br /> }} />
+                        <Trans
+                            i18nKey={"foliage.description"}
+                            components={{ br: <br /> }}
+                        />
                     </Paragraph>
                 </Card>
             </div>

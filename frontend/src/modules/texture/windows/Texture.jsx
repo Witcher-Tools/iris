@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
     addTexture,
@@ -8,33 +8,38 @@ import {
     setLoading,
     setTextures,
 } from "@/redux/action/texture.js";
-import {trimString} from "@/utils/string.js";
-import {useTranslation} from "react-i18next";
-import {useDispatch, useSelector} from "react-redux";
+import { trimString } from "@/utils/string.js";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 
-import {Texture as TextureModel} from "@bindings/changeme/internal/texture/model/texture/index.js";
+import { Texture as TextureModel } from "@bindings/changeme/internal/texture/model/texture/index.js";
 import {
     Import,
+    LoadPreset,
+    SavePreset,
     SelectImportFolder,
     SelectImportTextureMap,
 } from "@bindings/changeme/internal/texture/service/importer/importer.js";
-import {ImportOptions} from "@bindings/changeme/internal/texture/service/importer/index.js";
+import { ImportOptions } from "@bindings/changeme/internal/texture/service/importer/index.js";
 
 import Button from "@shared/components/ui/Button/Button.jsx";
 import Card from "@shared/components/ui/Card/Card.jsx";
 import Input from "@shared/components/ui/Input/Input.jsx";
 import Modal from "@shared/components/ui/Modal/Modal.jsx";
 import Separator from "@shared/components/ui/Separator/Separator.jsx";
-import {useModal} from "@shared/hooks/useModal.js";
+import { useModal } from "@shared/hooks/useModal.js";
 
 import TextureRangeSelector from "../components/Range/Range.jsx";
 import "./Texture.css";
 
 function Texture() {
+    const [presetName, setPresetName] = useState("");
+
     const { t } = useTranslation();
 
     const { isVisible, modalStyle, modalTitle, modalContent, openModal, closeModal } =
         useModal();
+    const savePresetModal = useModal();
 
     const dispatch = useDispatch();
 
@@ -118,6 +123,54 @@ function Texture() {
             )
         );
         dispatch(setImportTextureMap(response.Data.ImportTextureMap));
+    };
+
+    const savePreset = async () => {
+        savePresetModal.closeModal();
+
+        const response = await SavePreset(
+            textures.map((el) => new TextureModel(el)),
+            presetName
+        );
+
+        if (response.Error !== null) {
+            openModal(
+                "error",
+                t("main.error"),
+                t(`texture.errors.${response.Error.Code}`)
+            );
+            return;
+        }
+
+        openModal("success", t("main.success"), t("texture.successPresetSave"));
+    };
+
+    const loadPreset = async () => {
+        const response = await LoadPreset();
+
+        if (response.Error !== null) {
+            openModal(
+                "error",
+                t("main.error"),
+                t(`texture.errors.${response.Error.Code}`)
+            );
+            return;
+        }
+
+        dispatch(
+            setTextures(
+                response.Data.textures.map((el) => {
+                    return {
+                        verticalTexture: el.verticalTexture,
+                        horizontalTexture: el.horizontalTexture,
+                        slope: el.slope,
+                        scale: el.scale,
+                        start: el.start,
+                        end: el.end,
+                    };
+                })
+            )
+        );
     };
 
     useEffect(() => {
@@ -226,11 +279,28 @@ function Texture() {
                                 }
                             />
                             <Separator />
-                            <Button
-                                className={"py-2 text-sm"}
-                                text={t("texture.addTexture")}
-                                onClick={addTextureA}
-                            />
+                            <div className="flex flex-row gap-1.5">
+                                <Button
+                                    className={"adjusted w-full py-0.5 text-sm"}
+                                    text={t("texture.addTexture")}
+                                    onClick={addTextureA}
+                                />
+                                <Button
+                                    className={
+                                        "square adjusted w-full basis-2/12 py-0.5 text-sm"
+                                    }
+                                    onClick={loadPreset}
+                                    icon={"images/icon/file-upload.png"}
+                                />
+                                <Button
+                                    className={
+                                        "square adjusted w-full basis-2/12 py-0.5 text-sm"
+                                    }
+                                    disabled={textures.length === 0}
+                                    onClick={() => savePresetModal.openModal()}
+                                    icon={"images/icon/download.png"}
+                                />
+                            </div>
                         </div>
                         <div className="flex flex-col">
                             <div className="flex flex-col gap-4">
@@ -256,13 +326,6 @@ function Texture() {
                                         className={"py-2 text-sm"}
                                         text={t("texture.selectTilesFolder")}
                                     />
-                                    <Modal
-                                        isVisible={isVisible}
-                                        onClose={closeModal}
-                                        title={modalTitle}
-                                        style={modalStyle}>
-                                        <p>{modalContent}</p>
-                                    </Modal>
                                 </div>
                             </div>
                             <Separator className={"my-4"} />
@@ -288,6 +351,32 @@ function Texture() {
                     </div>
                 </div>
             </div>
+            <Modal
+                isVisible={isVisible}
+                onClose={closeModal}
+                title={modalTitle}
+                style={modalStyle}>
+                <p>{modalContent}</p>
+            </Modal>
+
+            <Modal
+                isVisible={savePresetModal.isVisible}
+                onClose={savePresetModal.closeModal}
+                title={t("texture.savePreset")}
+                style={"default"}>
+                <Input
+                    value={presetName}
+                    onChange={(e) => setPresetName(e.target.value)}
+                    className={"px-3 py-2.5"}
+                    placeholder={t("texture.presetName")}
+                />
+                <Button
+                    disabled={presetName?.length === 0}
+                    className={"mt-2 w-full py-1"}
+                    onClick={savePreset}
+                    text={t("main.save")}
+                />
+            </Modal>
         </>
     );
 }

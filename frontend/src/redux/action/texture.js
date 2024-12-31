@@ -1,4 +1,4 @@
-import {UPDATE_TEXTURES} from "../types/texture.js";
+import { UPDATE_TEXTURES } from "../types/texture.js";
 
 export const setTextureState = (payload) => {
     return {
@@ -45,7 +45,7 @@ export const addTexture = (texture) => (dispatch, getState) => {
                 highlightedTexture: null,
             })
         );
-    }, 1000);
+    }, 500);
 };
 
 export const selectTexture = (textureIndex) => (dispatch, getState) => {
@@ -113,7 +113,7 @@ export const deleteTexture = (textureIndex) => (dispatch, getState) => {
             return { ...texture, end: textures[textureIndex].end };
         }
         if (index === textureIndex + 1 && textureIndex === 0) {
-            return {...texture, start: textures[textureIndex].start};
+            return { ...texture, start: textures[textureIndex].start };
         }
         return texture;
     });
