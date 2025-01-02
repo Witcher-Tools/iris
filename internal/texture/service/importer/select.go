@@ -70,7 +70,7 @@ func (i *Importer) SelectImportTextureMap() *response.Response[SelectImportTextu
 	height := bounds.Dy()
 
 	if width != height {
-		return response.AsError[SelectImportTextureMapResponse]("ERROR_NON_SQUARE_IMAGE")
+		return response.AsError[SelectImportTextureMapResponse]("ERROR_NON_SQUARE_TEXTURE_MAP")
 	}
 
 	if width < 256 || height < 256 {

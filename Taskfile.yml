@@ -4,7 +4,6 @@ vars:
   APP_NAME: "tes"
   BIN_DIR: "bin"
   VITE_PORT: '{{.WAILS_VITE_PORT | default 9245}}'
-  PRODUCTION: true
 
 tasks:
 

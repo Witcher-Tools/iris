@@ -30,8 +30,8 @@
 
         "errors": {
             "ERROR_OPEN_TEXTURE_MAP": "Не вдалося відкрити файл текстурної карти.",
-            "ERROR_DECODE_COLORMAP": "Не вдалося декодувати зображення текстурної карти.",
-            "ERROR_NON_SQUARE_COLORMAP": "Зображення текстурної карти не є квадратним.",
+            "ERROR_DECODE_TEXTURE_MAP": "Не вдалося декодувати зображення текстурної карти.",
+            "ERROR_NON_SQUARE_TEXTURE_MAP": "Зображення текстурної карти не є квадратним.",
             "ERROR_READ_TILES": "Не вдалося прочитати тайли або в папці немає тайлів.",
             "ERROR_NO_TILE_FILES": "Папка тайлів не містить файлів тайлів.",
             "ERROR_INVALID_TILE_RESOLUTION": "Роздільна здатність тайлів у назві файлу є недійсною.",
@@ -43,7 +43,10 @@
             "ERROR_READ_PRESET": "Не вдалося прочитати пресет.",
             "ERROR_GET_PRESET_FOLDER": "Не вдалося знайти папку пресетів.",
             "ERROR_MARSHAL_PRESET": "Не вдалося обробити дані пресету.",
-            "ERROR_WRITE_PRESET": "Не вдалося зберегти пресет."
+            "ERROR_WRITE_PRESET": "Не вдалося зберегти пресет.",
+            "ERROR_LOW_RESOLUTION_IMAGE": "Роздільна здатність зображення занадто низька.",
+            "ERROR_WRITE_TILE": "Не вдалося зберегти тайл.",
+            "ERROR_ENCODE_TEXTURE_MAP": "Не вдалося закодувати зображення текстурної карти."
         },
         "loadPreset": "texture.loadPreset"
     },

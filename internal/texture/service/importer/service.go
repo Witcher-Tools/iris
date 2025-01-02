@@ -44,14 +44,14 @@ func (i *Importer) Import(options *ImportOptions) *response.Response[bool] {
 
 	colormapImg, _, err := image.DecodeConfig(colormapFile)
 	if err != nil {
-		return response.AsError[bool]("ERROR_DECODE_COLORMAP")
+		return response.AsError[bool]("ERROR_DECODE_TEXTURE_MAP")
 	}
 
 	colormapWidth := colormapImg.Width
 	colormapHeight := colormapImg.Height
 
 	if colormapWidth != colormapHeight {
-		return response.AsError[bool]("ERROR_NON_SQUARE_COLORMAP")
+		return response.AsError[bool]("ERROR_NON_SQUARE_TEXTURE_MAP")
 	}
 
 	tileFiles, err := filepath.Glob(filepath.Join(options.ImportFolder, "*.w2ter"))
@@ -104,12 +104,12 @@ func (i *Importer) Import(options *ImportOptions) *response.Response[bool] {
 
 	textureMapFile, err := os.Open(options.TextureMap)
 	if err != nil {
-		return response.AsError[bool]("ERROR_OPEN_COLORMAP")
+		return response.AsError[bool]("ERROR_OPEN_TEXTURE_MAP")
 	}
 
 	textureMap, err := png.Decode(textureMapFile)
 	if err != nil {
-		return response.AsError[bool]("ERROR_DECODE_COLORMAP")
+		return response.AsError[bool]("ERROR_DECODE_TEXTURE_MAP")
 	}
 
 	var wg sync.WaitGroup

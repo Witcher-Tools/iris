@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import {
     addTexture,
@@ -8,11 +8,11 @@ import {
     setLoading,
     setTextures,
 } from "@/redux/action/texture.js";
-import { trimString } from "@/utils/string.js";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import {trimString} from "@/utils/string.js";
+import {useTranslation} from "react-i18next";
+import {useDispatch, useSelector} from "react-redux";
 
-import { Texture as TextureModel } from "@bindings/changeme/internal/texture/model/texture/index.js";
+import {Texture as TextureModel} from "@bindings/changeme/internal/texture/model/texture/index.js";
 import {
     Import,
     LoadPreset,
@@ -20,14 +20,14 @@ import {
     SelectImportFolder,
     SelectImportTextureMap,
 } from "@bindings/changeme/internal/texture/service/importer/importer.js";
-import { ImportOptions } from "@bindings/changeme/internal/texture/service/importer/index.js";
+import {ImportOptions} from "@bindings/changeme/internal/texture/service/importer/index.js";
 
 import Button from "@shared/components/ui/Button/Button.jsx";
 import Card from "@shared/components/ui/Card/Card.jsx";
 import Input from "@shared/components/ui/Input/Input.jsx";
 import Modal from "@shared/components/ui/Modal/Modal.jsx";
 import Separator from "@shared/components/ui/Separator/Separator.jsx";
-import { useModal } from "@shared/hooks/useModal.js";
+import {useModal} from "@shared/hooks/useModal.js";
 
 import TextureRangeSelector from "../components/Range/Range.jsx";
 import "./Texture.css";
@@ -204,8 +204,8 @@ function Texture() {
                     const texture = textures[selectedTexture];
                     if (greyscale >= texture.start && greyscale <= texture.end) {
                         data[i] = 0;
-                        data[i + 1] = 255;
-                        data[i + 2] = 0;
+                        data[i + 1] = 220;
+                        data[i + 2] = 90;
                     }
                 }
             }
@@ -305,7 +305,7 @@ function Texture() {
                         <div className="flex flex-col">
                             <div className="flex flex-col gap-4">
                                 <div className="flex flex-col">
-                                    <span className={"text-gradient text-sm"}>
+                                    <span className={"text-gradient text-sm break-all"}>
                                         {t("texture.textureMap") +
                                             trimString(importTextureMap)}
                                     </span>
@@ -317,7 +317,7 @@ function Texture() {
                                     />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className={"text-gradient text-sm"}>
+                                    <span className={"text-gradient text-sm break-all"}>
                                         {t("texture.tilesFolder") +
                                             trimString(importFolder)}
                                     </span>

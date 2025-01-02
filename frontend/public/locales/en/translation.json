@@ -30,8 +30,8 @@
 
         "errors": {
             "ERROR_OPEN_TEXTURE_MAP": "Failed to open the texture map file.",
-            "ERROR_DECODE_COLORMAP": "Failed to decode the colormap image.",
-            "ERROR_NON_SQUARE_COLORMAP": "The colormap image is not square.",
+            "ERROR_DECODE_TEXTURE_MAP": "Failed to decode the texture map image.",
+            "ERROR_NON_SQUARE_TEXTURE_MAP": "The texture map image is not square.",
             "ERROR_READ_TILES": "Failed to read tiles or no tiles found.",
             "ERROR_NO_TILE_FILES": "The tiles folder contains no tile files.",
             "ERROR_INVALID_TILE_RESOLUTION": "The tile resolution in the filename is invalid.",
@@ -43,7 +43,10 @@
             "ERROR_READ_PRESET": "Failed to read the preset.",
             "ERROR_GET_PRESET_FOLDER": "Failed to locate the preset folder.",
             "ERROR_MARSHAL_PRESET": "Failed to process the preset data.",
-            "ERROR_WRITE_PRESET": "Failed to save the preset."
+            "ERROR_WRITE_PRESET": "Failed to save the preset.",
+            "ERROR_LOW_RESOLUTION_IMAGE": "The image resolution is too low.",
+            "ERROR_WRITE_TILE": "Failed to save the tile.",
+            "ERROR_ENCODE_TEXTURE_MAP": "Failed to encode the texture map image."
         },
         "loadPreset": "texture.loadPreset"
     },
