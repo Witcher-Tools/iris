@@ -4,6 +4,7 @@ vars:
   APP_NAME: "tes"
   BIN_DIR: "bin"
   VITE_PORT: '{{.WAILS_VITE_PORT | default 9245}}'
+  PRODUCTION: true
 
 tasks:
 
@@ -42,7 +43,7 @@ tasks:
       GOOS: windows
       CGO_ENABLED: 0
       GOARCH: '{{.ARCH | default ARCH}}'
-      PRODUCTION: '{{.PRODUCTION | default "false"}}'
+      PRODUCTION: true
 
   build:windows:prod:arm64:
     summary: Creates a production build of the application
