@@ -1,11 +1,11 @@
 package tile
 
 import (
-	foliage "changeme/internal/foliage/model/row"
+	"changeme/internal/foliage/model/row"
 )
 
 type Tile struct {
-	Foliage []foliage.Row
+	Foliage []foliage.foliage
 
 	Box []uint16
 }
