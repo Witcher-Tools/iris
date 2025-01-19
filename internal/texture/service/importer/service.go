@@ -131,6 +131,16 @@ func (i *Importer) Import(options *ImportOptions) *response.Response[bool] {
 			tileX, err := strconv.Atoi(strings.Split(filepath.Base(tilePath), "_")[1])
 			tileY, err := strconv.Atoi(strings.Split(filepath.Base(tilePath), "_")[3])
 
+			tileData, err := os.ReadFile(tilePath)
+			if err != nil {
+				select {
+				case errChan <- fmt.Errorf("failed to read tile file %s: %w", tilePath, err):
+				default:
+				}
+				return
+			}
+			copy(tileTextureBytes, tileData[startAddress:startAddress+len(tileTextureBytes)])
+
 			for x := 0; x < tileResolution; x++ {
 				for y := 0; y < tileResolution; y++ {
 					colorMapX := ((tileY * tileResolution) + x) * textureMap.Bounds().Max.X / mapGridResolution
@@ -155,15 +165,6 @@ func (i *Importer) Import(options *ImportOptions) *response.Response[bool] {
 						tileTextureBytes[offset], tileTextureBytes[offset+1] = foundTexture.ByteValue()
 					}
 				}
-			}
-
-			tileData, err := os.ReadFile(tilePath)
-			if err != nil {
-				select {
-				case errChan <- fmt.Errorf("failed to read tile file %s: %w", tilePath, err):
-				default:
-				}
-				return
 			}
 
 			copy(tileData[startAddress:startAddress+len(tileTextureBytes)], tileTextureBytes)
